@@ -8,6 +8,7 @@ gunicorn = "*"
 django-heroku = "*"
 stripe = "*"
 django-ipware = "*"
+pillow = "*"
 
 [dev-packages]
 
