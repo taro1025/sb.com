@@ -28,9 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'gnc8zmv@0r5p$n9+-%p4kt6=*h&xr4)5%ty-e)4vd97*6r!c&-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["smash-match.herokuapp.com"]
 
 
 # Application definition
@@ -88,6 +88,9 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -125,7 +128,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 追記
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'match', 'media')
 MEDIA_URL = '/media/'
@@ -148,3 +156,12 @@ LOGIN_REDIRECT_URL = 'match:top'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51Hz06FBOB5bflgZhMAWTTInZiMz80kEvK6lxLDgBxgJleUpD7FiLf2DK9I27O15BWWqz8sVrHi39S9ieXNNvdixN00OW17mP5x'
 STRIPE_SECRET_KEY = 'sk_test_51Hz06FBOB5bflgZhLaeAQ27aeo1lNvkqcBCjNLaBSmNN6LOsnrI0eqg5pW2xKx9psz3mmlKf2p64dblT2FAk6cVm00eep7QfsF'
+
+try:
+    from config.local_settings import *
+except ImportError:
+    pass
+
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
