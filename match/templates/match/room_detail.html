@@ -1,0 +1,6 @@
+{% extends "match/base.html" %}
+{% block content %}
+{% for message in room.message_list.all %}
+  <p>{{ message.text }}</p>
+{% endfor %}
+{% endblock %}

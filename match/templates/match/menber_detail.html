@@ -1,0 +1,31 @@
+{% extends "match/base.html" %}
+{% block content %}
+<table class="table">
+        <tr>
+            <th>プロフ画像</th>
+              <td>{{ menber_detail.user_img }}</td>
+            </tr>
+        <tr>
+            <th>姓</th>
+            <td>{{ usermenber_detail.last_name }}</td>
+        </tr>
+        <tr>
+            <th>名</th>
+            <td>{{ menber_detail.first_name }}</td>
+        </tr>
+        <tr>
+            <th>使用キャラ</th>
+            <td>{{ menber_detail.user_char }}</td>
+        </tr>
+        <tr>
+          <th>request</th>
+          <td>
+              {% if user.is_authenticated and menber_detail.busy == False %}
+                <a href="{% url 'match:message_list' menber_detail.pk %}">相談する</a>
+
+              {% endif %}
+          </td>
+        </tr>
+
+</table>
+{% endblock %}

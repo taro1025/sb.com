@@ -1,0 +1,13 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+<form action="" method="POST">
+  <p>チャージIDを送信</p>
+  <input type="text" name="charge_id">
+  <button type="submit">送信</button>
+  {% csrf_token %}
+</form>
+
+
+
+{% endblock %}

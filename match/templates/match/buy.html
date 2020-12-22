@@ -1,0 +1,58 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+
+{{ menter.describe1}}
+<!-- 購入ボタン・フォームの作成 -->
+{% if user.is_authenticated and user.menter == 2 %}
+  {% if select_course == 1 %}
+    <form action="" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="{{ publick_key }}"
+          data-amount="{{ menter.course1 }}"
+          data-name="スマブラマッチング"
+          data-description="{{ menter.describe1 }}"
+          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+          data-locale="ja"
+          data-currency="jpy"
+          data-email="{{ user.email }}">
+      </script>
+      {% csrf_token %}
+    </form>
+  {% endif %}
+  {% if select_course == 2 %}
+    <form action="" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="{{ publick_key }}"
+          data-amount="{{ menter.course2 }}"
+          data-name="スマブラマッチング"
+          data-description="{{ menter.describe2 }}"
+          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+          data-locale="ja"
+          data-currency="jpy"
+          data-email="{{ user.email }}">
+      </script>
+      {% csrf_token %}
+    </form>
+  {% endif %}
+  {% if select_course == 3 %}
+    <form action="" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="{{ publick_key }}"
+          data-amount="{{ menter.course3 }}"
+          data-name="スマブラマッチング"
+          data-description="{{ menter.describe3 }}"
+          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+          data-locale="ja"
+          data-currency="jpy"
+          data-email="{{ user.email }}">
+      </script>
+      {% csrf_token %}
+    </form>
+  {% endif %}
+{% endif %}
+
+{% endblock %}

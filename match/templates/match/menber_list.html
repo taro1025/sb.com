@@ -1,0 +1,28 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+  <h1>スマブラマッチングへようこそ！</h1>
+
+
+  <div class="container">
+    <div class="row">
+  {% for men in users %}
+
+        <div class="col-lg-4">
+          <div class="card" style="width: 20rem;">
+            {% if men.user_img %}
+              <img class="card-img-top" src="{{ men.user_img.url }}">
+            {% endif %}
+            <div class="card-body">
+              <a class="card-title" href="{% url 'match:menber_detail' men.pk %}">{{ men.last_name }}さん</a>
+              <p class="card-text">使用キャラ:{{ men.user_char }}</p>
+            </div>
+          </div>
+        </div>
+
+{% endfor %}
+
+  </div>
+</div>
+
+{% endblock %}

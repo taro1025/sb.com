@@ -1,0 +1,16 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+<form action="" method="POST">
+  {{ form.non_field_errors }}
+  {% for field in form %}
+    {{ field }}
+    {{ field.errors }}
+  {% endfor %}
+  <button type="submit">ログイン</button>
+  {% csrf_token %}
+</form>
+
+<a href="{% url 'match:user_create' %}"  >会員登録</a>
+
+{% endblock %}

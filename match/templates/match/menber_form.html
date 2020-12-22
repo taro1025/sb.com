@@ -1,0 +1,10 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+  <h1>登録</h1>
+  <form action="" method="POST">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">送信</button>
+  </form>
+{% endblock %}

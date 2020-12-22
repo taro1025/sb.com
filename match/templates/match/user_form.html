@@ -1,0 +1,39 @@
+{% extends "match/base.html" %}
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.non_field_errors }}
+      <p>
+      {{ form.last_name }}
+      {{ form.first_name }}
+      </p>
+      <p>
+      {{ form.email }}
+      </p>
+      <p>
+      {{ form.char }}
+      {{ form.user_img }}
+      </p>
+
+      {{ form.menter }}
+
+      {% if user.menter == 1 %}
+        <p>
+        {{ form.course1 }}:
+        {{ form.describe1 }}
+        </p>
+        <p>
+        {{ form.course2 }}:
+        {{ form.describe2 }}
+        </p>
+        <p>
+        {{ form.course3 }}:
+        {{ form.describe3 }}
+        </p>
+        <p><a href="{% url 'match:account_update' user.pk %}">詳細設定(依頼を受ける際に必要になります。)</a></p>
+        <br>
+       <p>{{ form.busy }} 仕事を受け付けない </p>
+      {% endif %}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-lg" >送信</button>
+</form>
+{% endblock %}

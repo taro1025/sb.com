@@ -1,0 +1,58 @@
+{% extends "match/base.html" %}
+{% block content %}
+<table class="table">
+
+        <tr>
+            <th>ユーザー名</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>姓</th>
+            <td>{{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <th>名</th>
+            <td>{{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <th>使用キャラ</th>
+            <td>{{ user.user_char }}</td>
+        </tr>
+        <tr>
+            <th>プロフ画像</th>
+            {% if user.user_img %}
+              <p>af</p>
+              <td><img src="{{ user.user_img.url }}"></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <th>メンターor弟子</th>
+            <td>{{ user.menter }}</td>
+        </tr>
+        {% if user.menter == 1 %}
+          {% if user.course1 %}
+          <tr>
+              <th>コース1の値段:{{ user.course1 }}円</th>
+              <td>{{user.describe1}}</td>
+            </tr>
+          {% endif %}
+          {% if user.course2 %}
+            <tr>
+              <th>コース2の値段:{{ user.course2 }}円</th>
+              <td>{{user.describe2}}</td>
+            </tr>
+          {% endif %}
+          {% if user.course3 %}
+            <tr>
+              <th>コース3の値段:{{ user.course3 }}円</th>
+              <td>{{user.describe3}}</td>
+            </tr>
+            <tr>
+              <th>仕事を受け付けない</th>
+              <td>{{ user.busy }}</td>
+            </tr>
+          {% endif %}
+        {% endif %}
+
+</table>
+{% endblock %}

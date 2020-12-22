@@ -1,0 +1,102 @@
+{% extends "match/base.html" %}
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.non_field_errors }}
+    <table class="table">
+            <tr>
+                <th>　アカウントナンバー </th>
+                <td>{{ form.user_account_number }}</td>
+            </tr>
+            <tr>
+                <th>銀行コード＋支店コード</th>
+                <td>{{ form.user_routing_number }}</td>
+            </tr>
+            <tr>
+                <th>口座名義</th>
+                <td>{{ form.user_holder_name }}</td>
+            </tr>
+            <tr>
+                <th>郵便番号</th>
+                <td>{{ form.user_postal_code }}</td>
+            </tr>
+            <tr>
+              <th>都道府県（カナ）</th>
+              <td>{{ form.user_state_kana }}</td>
+            </tr>
+            <tr>
+                <th>区市町村（カナ）</th>
+                <td>{{ form.user_city_kana }}</td>
+            </tr>
+            <tr>
+                <th>町名（カナ）</th>
+                <td>{{ form.user_town_kana }}</td>
+            </tr>
+            <tr>
+                <th>番地・号（カナ）</th>
+                <td>{{ form.user_line1_kana }}</td>
+            </tr>
+            <tr>
+                <th>建物・部屋番号・その他（カナ）（任意）</th>
+                <td>{{ form.user_line2_kana }}</td>
+            </tr>
+          <tr>
+            <th>都道府県（漢字）</th>
+            <td>{{ form.user_state_kanji }}</td>
+          </tr>
+          <tr>
+              <th>区市町村（漢字）</th>
+              <td>{{ form.user_city_kanji }}</td>
+          </tr>
+          <tr>
+              <th>町名（漢字）</th>
+              <td>{{ form.user_town_kanji }}</td>
+          </tr>
+          <tr>
+              <th>番地・号（漢字）</th>
+              <td>{{ form.user_line1_kanji }}</td>
+          </tr>
+          <tr>
+              <th>建物・部屋番号・その他（漢字）（任意）</th>
+              <td>{{ form.user_line2_kanji }}</td>
+          </tr>
+            <tr>
+              <th>生年月日</th>
+              <td>{{ form.user_year }}年 {{ form.user_month }}月 {{ form.user_day }}日</td>
+            </tr>
+            <tr>
+                <th>電話番号</th>
+                <td>{{ form.user_phone_number }}</td>
+            </tr>
+            <tr>
+                <th>姓（カナ）</th>
+                <td>{{ form.user_last_name_kana }}</td>
+            </tr>
+            <tr>
+                <th>姓（漢字）</th>
+                <td>{{ form.user_last_name_kanji }}</td>
+            </tr>
+            <tr>
+                <th>名（カナ）</th>
+                <td>{{ form.user_first_name_kana }}</td>
+            </tr>
+            <tr>
+                <th>名（漢字）</th>
+                <td>{{ form.user_first_name_kanji }}</td>
+            </tr>
+            <tr>
+                <th>性別</th>
+                <td>{{ form.user_gender }}</td>
+            </tr>
+            <tr>
+                <th>本人確認書類（表）</th>
+                <td>{{ form.user_verification_front }}</td>
+            </tr>
+            <tr>
+                <th>本人確認書類（裏）</th>
+                <td>{{ form.user_verification_back }}</td>
+            </tr>
+    </table>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-lg" >送信</button>
+</form>
+{% endblock %}
