@@ -1,16 +1,1 @@
-[[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
-
-[packages]
-gunicorn = "*"
-django-heroku = "*"
-stripe = "*"
-django-ipware = "*"
-pillow = "*"
-
-[dev-packages]
-
-[requires]
-python_version = "3.8"
+web: gunicorn smash-match.wsgi --log-file -
