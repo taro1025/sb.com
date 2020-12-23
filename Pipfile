@@ -1,1 +1,0 @@
-web: gunicorn smash-match.wsgi --log-file -
