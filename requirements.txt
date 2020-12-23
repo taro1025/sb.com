@@ -4,3 +4,4 @@ gunicorn
 pillow
 stripe
 django-ipware
+dj-static
