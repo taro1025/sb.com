@@ -30,12 +30,13 @@ SECRET_KEY = 'gnc8zmv@0r5p$n9+-%p4kt6=*h&xr4)5%ty-e)4vd97*6r!c&-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["smash-match.herokuapp.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'match.apps.MatchConfig',
     'django.contrib.admin',
     'django.contrib.auth',
