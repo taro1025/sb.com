@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
-from .models import User, Message, BuyingHistory
+from .models import User, Message, BuyingHistory, Char
 from django.views import generic
 from django.views.generic.edit import ModelFormMixin
 from django.urls import reverse_lazy
-from .forms import LoginForm, UserCreateForm, UserUpdateForm, SendMessage, AccountUpdateForm
+from .forms import LoginForm, UserCreateForm, UserUpdateForm, SendMessage, AccountUpdateForm, CreateCharForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView, LogoutView
@@ -419,6 +419,21 @@ class Refund(OnlySuperUser,generic.ListView):
             reverse_transfer=True,
         )
         return HttpResponse("ok")
+
+class CreateChar(OnlySuperUser, generic.CreateView):
+    """adminになぜかアクセスできないからその代わり"""
+    model = Char
+    template_name = 'match/create_char.html'
+    form_class = CreateCharForm
+
+    def get_success_url(self):
+        return resolve_url('match:create_char')
+
+    def get_context_data(self, **kwargs):
+        kwargs['char_list'] = Char.objects.all()
+        return super().get_context_data(**kwargs)
+
+
 
 
 class UserDetail(OnlyYouMixin, generic.DetailView):

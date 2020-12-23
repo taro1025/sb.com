@@ -1,0 +1,15 @@
+{% extends "match/base.html" %}
+
+{% block content %}
+<form action="" method="POST">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">作成</button>
+</form>
+
+<h1>キャラ一覧</h1>
+{% for char in char_list %}
+  <p>{{ char }}</p>
+{% endfor %}
+
+{% endblock %}

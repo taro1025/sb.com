@@ -4,9 +4,14 @@ from django.contrib.auth.forms import (
     AuthenticationForm, UserCreationForm
 )
 from django.contrib.auth import get_user_model
-from .models import Message
+from .models import Message, Char
 
 User = get_user_model()
+
+class CreateCharForm(forms.ModelForm):
+    class Meta:
+        model = Char
+        fields = ('char',)
 
 class SendMessage(forms.ModelForm):
     class Meta:
