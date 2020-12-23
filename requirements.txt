@@ -5,3 +5,4 @@ pillow
 stripe
 django-ipware
 dj-static
+dj-database-url
