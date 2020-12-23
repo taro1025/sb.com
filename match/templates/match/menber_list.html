@@ -15,7 +15,7 @@
             {% endif %}
             <div class="card-body">
               <a class="card-title" href="{% url 'match:menber_detail' men.pk %}">{{ men.last_name }}さん</a>
-              <p class="card-text">使用キャラ:{{ men.user_char }}</p>
+              <p class="card-text">使用キャラ:{% for char in men.user_char.all %}{{ char }},{% endfor %}</p>
             </div>
           </div>
         </div>
