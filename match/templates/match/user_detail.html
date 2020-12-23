@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <th>使用キャラ</th>
-            <td>{{ user.user_char }}</td>
+            <td>{% for char in user.user_char.all %}{{ char }},{% endfor %}</td>
         </tr>
         <tr>
             <th>プロフ画像</th>

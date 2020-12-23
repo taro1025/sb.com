@@ -7,7 +7,7 @@
             </tr>
         <tr>
             <th>姓</th>
-            <td>{{ usermenber_detail.last_name }}</td>
+            <td>{{ menber_detail.last_name }}</td>
         </tr>
         <tr>
             <th>名</th>
@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <th>使用キャラ</th>
-            <td>{{ menber_detail.user_char }}</td>
+            <td>{% for char in menber_detail.user_char.all %}{{ char }},{% endfor %}</td>
         </tr>
         <tr>
           <th>request</th>
