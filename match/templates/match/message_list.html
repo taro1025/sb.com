@@ -1,8 +1,16 @@
 {% extends "match/base.html" %}
 {% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'match:menber_detail' pk %}">{{ menter.last_name }}さんの詳細</a></li>
+    <li class="breadcrumb-item active" aria-current="page">メッセージ</li>
+  </ol>
+</nav>
 {% for message in message_list %}
   {% if user.is_authenticated %}
   <!--自分のメッセージかつ宛先が相手、　相手のメッセージかつ宛先が自分-->
+  <!--message.room.pkはメッセージの持ち主, user.pkはアクセスしてる人, pkはメッセージの送り相手-->
     {% if message.room.pk == user.pk and message.to_user.pk == pk or message.room.pk == pk and message.to_user.pk == user.pk %}
 
       <p>{{ message.room.last_name }}:{{ message.text }}</p>

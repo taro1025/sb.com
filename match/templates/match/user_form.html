@@ -1,5 +1,13 @@
 {% extends "match/base.html" %}
 {% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">プロフィール設定</li>
+  </ol>
+</nav>
+<table class="table">
+
 <form action="" method="POST" enctype="multipart/form-data">
     {{ form.non_field_errors }}
       <p>

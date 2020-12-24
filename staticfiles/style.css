@@ -2,9 +2,9 @@
   margin: 0; padding: 0;
 }
 
-
 header {
   width: 100%;
+  padding: 15px 0;
   margin: 0 auto;
   text-align: center;
 }
@@ -25,6 +25,6 @@ header .headline{
   margin: 0 20px;
 }
 
-.breadcrumb {
-  background: #f8f9fa;
+.breadcrumb{
+  background: !important　red;
 }

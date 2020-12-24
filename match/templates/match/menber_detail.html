@@ -1,5 +1,12 @@
 {% extends "match/base.html" %}
 {% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ menber_detail.last_name }}さんの詳細</li>
+  </ol>
+</nav>
+
 <table class="table">
         <tr>
             <th>プロフ画像</th>
@@ -22,7 +29,9 @@
           <td>
               {% if user.is_authenticated and menber_detail.busy == False %}
                 <a href="{% url 'match:message_list' menber_detail.pk %}">相談する</a>
-
+              {% endif %}
+              {% if user.is_authenticated == False %}
+                メンターに相談するには<a href="{% url 'match:user_create' %}"  >会員登録</a>が必要です。
               {% endif %}
           </td>
         </tr>
