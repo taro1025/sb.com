@@ -21,6 +21,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 import os
 # Create your views here.
 
+def About(request):
+    return render(request, 'match/about.html')
 
 class Top(generic.ListView):
     model = User

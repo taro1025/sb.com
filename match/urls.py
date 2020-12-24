@@ -18,6 +18,7 @@ urlpatterns=[
     path('account/<int:pk>/', views.AccountUpdate.as_view(), name='account_update'),
     path('refund/', views.Refund.as_view(), name='refund'),
     path('create_char', views.CreateChar.as_view(), name='create_char'),
+    path('about/', views.About, name='about'),
     #path('select_course/<int:pk>/', views.CourseList.as_view(), name='course_list'),
     path('', views.Top.as_view(), name='top'),
 ]
