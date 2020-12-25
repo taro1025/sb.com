@@ -10,10 +10,10 @@
 
 
   <div class="container">
-    <div class="row">
+    <div class="row flex-row flex-nowrap overflow-auto">
   {% for men in users %}
 
-        <div class="col-2">
+        <div class="col-4">
           <div class="card" >
             {% if men.user_img %}
               <img class="card-img-top" src="{{ men.user_img }}">
