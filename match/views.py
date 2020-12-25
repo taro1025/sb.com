@@ -473,7 +473,7 @@ def RelateTwitter(request):
         twitter = api.me()
         user.user_img = twitter.profile_image_url_https
         user.twitter_url = 'https://twitter.com/'+twitter.screen_name
-
+        user.geted = True
         user.save()
         return redirect('match:top')
 
