@@ -460,7 +460,7 @@ def RelateTwitter(request):
 
 
         token = request.session['request_token']
-
+        del request.session['request_token']
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.request_token = { 'oauth_token' : token,
                          'oauth_token_secret' : oauth_verifier }
@@ -484,7 +484,8 @@ class UserDetail(OnlyYouMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         user = get_object_or_404(User, pk=self.request.user.pk)
-
+        if 'request_token' in self.request.session:
+            del self.request.session['request_token']
         if user.geted == False:
             re_url = auth.get_authorization_url()
             kwargs['re_url'] = re_url
