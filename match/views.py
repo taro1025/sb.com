@@ -19,7 +19,15 @@ import stripe
 from ipware import get_client_ip
 stripe.api_key = settings.STRIPE_SECRET_KEY
 import os
-# Create your views here.
+
+import tweepy
+consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY
+consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET
+
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+#auth.set_access_token(access_token,access_secret)
+api = tweepy.API(auth)
+
 
 def About(request):
     return render(request, 'match/about.html')
@@ -46,6 +54,7 @@ class AccountUpdate(generic.UpdateView):
     def get(self, request, *args, **kwargs):
         #self.object = None
         self.object = get_object_or_404(User, pk=self.kwargs['pk'])
+        print("ゆーあーるエル{}".format(self.object.twitter_url))
 
         print("get だよよよ{}".format(self.object.user_verification_front.url))
         return super().get(request, *args, **kwargs)
@@ -436,17 +445,61 @@ class CreateChar(OnlySuperUser, generic.CreateView):
         return super().get_context_data(**kwargs)
 
 
+def RelateTwitter(request):
+        user = get_object_or_404(User, pk=request.user.pk)
+        oauth_token = ''
+
+        url = request.GET
+        if 'oauth_token' in url:
+            oauth_token = request.GET['oauth_token']
+        if 'oauth_verifier' in url:
+            oauth_verifier = request.GET.get('oauth_verifier')
+        consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY
+        consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET
+
+
+
+        token = request.session['request_token']
+
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.request_token = { 'oauth_token' : token,
+                         'oauth_token_secret' : oauth_verifier }
+
+        auth.get_access_token(oauth_verifier)
+
+
+        api = tweepy.API(auth)
+
+        twitter = api.me()
+        user.user_img = twitter.profile_image_url_https
+        user.twitter_url = 'https://twitter.com/'+twitter.screen_name
+
+        user.save()
+        return redirect('match:top')
 
 
 class UserDetail(OnlyYouMixin, generic.DetailView):
     model = User
     template_name = 'match/user_detail.html'
 
+    def get_context_data(self, **kwargs):
+        user = get_object_or_404(User, pk=self.request.user.pk)
+
+        if user.geted == False:
+            re_url = auth.get_authorization_url()
+            kwargs['re_url'] = re_url
+            self.request.session['request_token'] = auth.request_token['oauth_token']
+            return super().get_context_data(**kwargs)
+        else:
+            kwargs['re_url'] = None
+            return super().get_context_data(**kwargs)
+
 
 class UserUpdate(OnlyYouMixin, generic.UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'match/user_form.html'
+
 
 
     def get_success_url(self):

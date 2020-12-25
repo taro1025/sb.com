@@ -27,9 +27,19 @@
         <tr>
             <th>プロフ画像</th>
             {% if user.user_img %}
-              <td><img src="{{ user.user_img.url }}"></td>
+              <td><img src="{{ user.user_img }}"></td>
             {% endif %}
         </tr>
+        {% if re_url %}
+        <tr>
+            <th>ツイッターと提携する</th>
+            <td>
+              <button type="button" class="button" onclick="location.href='{{ re_url }}'">
+                Twitter でログイン
+              </button>
+            </td>
+        </tr>
+        {% endif %}
         <tr>
             <th>メンターor弟子</th>
             <td>{{ user.menter }}</td>

@@ -7,3 +7,4 @@ django-ipware
 dj-static
 dj-database-url
 django-heroku
+tweepy

@@ -69,6 +69,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -161,6 +163,17 @@ LOGIN_REDIRECT_URL = 'match:top'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51Hz06FBOB5bflgZhMAWTTInZiMz80kEvK6lxLDgBxgJleUpD7FiLf2DK9I27O15BWWqz8sVrHi39S9ieXNNvdixN00OW17mP5x'
 STRIPE_SECRET_KEY = 'sk_test_51Hz06FBOB5bflgZhLaeAQ27aeo1lNvkqcBCjNLaBSmNN6LOsnrI0eqg5pW2xKx9psz3mmlKf2p64dblT2FAk6cVm00eep7QfsF'
+
+
+
+SOCIAL_AUTH_TWITTER_KEY = 'Va2yCtCo2D1Q36dSakWZHRtwJ'
+SOCIAL_AUTH_TWITTER_SECRET = 'Aax3O1IPNSn9ISYvc6O4mP3Yl4m0fpj26Se7PekVvZ3z0aJ6Jr'
+ACCESS_TOKEN = "1333724810615001089-G0yUahEN3fT7hmagxN1B42UDWVVIyz"
+ACCESS_TOKEN_SECRET = "4BAVquX9WoFVn764wYjpujfr9aYpdbKd0ZD5vcE0G7cir"
+
+BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAALPCKwEAAAAA8ksUfLH20gnidn7S2IZASWToPrI%3D1sHb913NjAJTIMSVEeFAoXQIU2yk0XlTx4MWE4IPx0RV4A7lRz'
+# For social-auth-app-django
+
 
 try:
     from config.local_settings import *

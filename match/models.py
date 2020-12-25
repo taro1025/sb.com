@@ -129,6 +129,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     user_verification_back = models.ImageField('本人確認（裏）', null=True)
     user_account_id = models.CharField('決済に使うID', max_length=255, blank=True, null=True)
 
+    """with twitter api"""
+    twitter_url = models.CharField('ツイッターのURL', max_length=255, null=True)
+    user_img = models.ImageField('プロフ画像',  blank=True)
+    geted = models.BooleanField('認証住み', default=False)
+
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
