@@ -3,7 +3,7 @@ from .models import User, Message, BuyingHistory, Char
 from django.views import generic
 from django.views.generic.edit import ModelFormMixin
 from django.urls import reverse_lazy
-from .forms import LoginForm, UserCreateForm, UserUpdateForm, SendMessage, AccountUpdateForm, CreateCharForm
+from .forms import LoginForm, UserCreateForm, UserUpdateForm, SendMessage, AccountUpdateForm, CreateCharForm, SearchForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView, LogoutView
@@ -27,6 +27,7 @@ consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 #auth.set_access_token(access_token,access_secret)
 api = tweepy.API(auth)
+from django.db.models import Q
 
 
 def About(request):
@@ -35,7 +36,34 @@ def About(request):
 class Top(generic.ListView):
     model = User
     template_name = 'match/menber_list.html'
-    context_object_name = 'users'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        form = SearchForm(self.request.GET or None)
+        if form.is_valid():
+            key_word = form.cleaned_data.get('key_word')
+            if key_word:
+                queryset = queryset.filter(
+                    Q(last_name__icontains=key_word)|Q(first_name__icontains=key_word)
+                    |Q(my_profile__icontains=key_word)|Q(user_char__char__icontains=key_word)
+                    |Q(describe1__icontains=key_word)|Q(describe2__icontains=key_word)
+                    |Q(describe3__icontains=key_word)
+                    ).distinct()
+            char = form.cleaned_data.get('char')
+            if char:
+                queryset = queryset.filter(user_char__in=char).distinct()
+            print("kya--n{}".format(char))
+        print("this is queryset.{}".format(queryset))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = self.get_queryset()
+        context['form'] = SearchForm(self.request.GET or None)
+        return context
+
+
+
 
 
 class MenberDetail(generic.DetailView):

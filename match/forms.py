@@ -7,6 +7,18 @@ from django.contrib.auth import get_user_model
 from .models import Message, Char
 
 User = get_user_model()
+#ModelMultipleChoiceField
+class SearchForm(forms.Form):
+    key_word = forms.CharField(
+        label='キーワード', required=False,
+        widget=forms.TextInput(attrs={'class':'form-control'})
+        )
+    char = forms.ModelMultipleChoiceField(
+        label='キャラの選択',required=False,
+        queryset=Char.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class':'form-control'})
+        )
+
 
 class CreateCharForm(forms.ModelForm):
     class Meta:

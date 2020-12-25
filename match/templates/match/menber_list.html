@@ -6,14 +6,41 @@
     <li class="breadcrumb-item active" aria-current="page">Home</li>
   </ol>
 </nav>
-  <h1>スマブラマッチングへようこそ！</h1>
+
+<div class="text-right">
+  <button class="btn btn-info"
+    data-toggle="collapse"
+    data-target="#example-1"
+    aria-expand="false"
+    aria-controls="example-1">メンターを絞る</button>
+<div class="collapse" id="example-1">
+  <div class="card card-body">
+    <form action="{% url 'match:top' %}" method="GET">
+      <div class="form-group">
+        <label for="text1">キーワード:</label>
+        {{ form.key_word }}
+      </div>
+      <div class="form-group">
+        <label for="text1">使用キャラ:</label>
+        {% for char in form.char %}
+        {{ char }}
+        {% endfor %}
+      </div>
+        {% csrf_token %}
+        <button class="btn btn-info" type="submit">送信</button>
+    </form>
+
+  </div>
+</div>
+ </div>
+ <h1>スマッシュマッチへようこそ！</h1>
 
 
   <div class="container">
     <div class="row flex-row flex-nowrap overflow-auto">
   {% for men in users %}
 
-        <div class="col-4">
+        <div class="col-4 col-md-3 col-lg-2">
           <div class="card" >
             {% if men.user_img %}
               <img class="card-img-top" src="{{ men.user_img }}">
