@@ -484,6 +484,7 @@ class UserDetail(OnlyYouMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         user = get_object_or_404(User, pk=self.request.user.pk)
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         if 'request_token' in self.request.session:
             del self.request.session['request_token']
         if user.geted == False:
