@@ -534,6 +534,15 @@ def RelateTwitter(request):
         user.save()
         return redirect('match:top')
 
+def Withdrawal(request):
+    """退会処理"""
+    if request.method == 'POST':
+        request.user.is_active = False
+        request.user.save()
+
+        return render(request, 'match/complete_withdrawal.html')
+
+    return render(request, 'match/withdrawal.html')
 
 class UserDetail(OnlyYouMixin, generic.DetailView):
     model = User

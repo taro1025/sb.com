@@ -1,0 +1,27 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'match:about' %}">利用方法</a></li>
+    <li class="breadcrumb-item active" aria-current="page">退会</li>
+  </ol>
+</nav>
+<div class="text-right">
+  <button class="btn btn-info"
+    data-toggle="collapse"
+    data-target="#example-1"
+    aria-expand="false"
+    aria-controls="example-1">退会してよろしいですか?</button>
+<div class="collapse" id="example-1">
+  <div class="card card-body">
+    <form action="" method="POST">
+
+        {% csrf_token %}
+        <button class="btn btn-info" type="submit" >退会する</button>
+    </form>
+
+
+
+{% endblock %}

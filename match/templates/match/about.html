@@ -1,6 +1,12 @@
 {% extends "match/base.html" %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">利用方法</li>
+  </ol>
+</nav>
 <div class="container">
   <div class="row">
     <div class="col align-self-center">
@@ -38,6 +44,13 @@
 
         </div>
       </div>
+      {% if user.is_authenticated %}
+      <div class="about-text">
+        <h1>退会手続き</h1>
+        <hr class="hr">
+        <p>退会は<a href="{% url 'match:withdrawal' %}">こちら</a></p>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
