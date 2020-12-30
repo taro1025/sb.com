@@ -303,6 +303,35 @@ class Buy(generic.DetailView):
             return redirect('match:message_list', pk=menter_pk)
 
 
+class Room(generic.ListView):
+    model = User
+    template_name = 'match/room.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        """distinctでフィールドを指定できないので代わりの処理"""
+        pks = Message.objects.filter(
+            to_user__pk=self.request.user.pk
+            ).order_by('room').distinct()
+        pklist = []
+        for i in pks:
+            if i.room.pk in pklist:
+                continue
+            pklist.append(i.room.pk)
+
+        get_user = User.objects.in_bulk(pklist)
+        users = []
+        for j in get_user:
+            users.append(get_user[j])
+
+        """usersはこのメンターとやりとりしてる人たち"""
+        context['users'] = users
+
+
+
+        return context
+
 class MessageList(generic.ListView, ModelFormMixin):
     model = Message
     form_class = SendMessage

@@ -15,6 +15,7 @@ urlpatterns=[
     path('user_update/<int:pk>/', views.UserUpdate.as_view(), name='user_update'),
     path('message/<int:pk>/', views.MessageList.as_view(), name='message_list'),
     path('message/<int:pk>/<int:num>/', views.Buy.as_view(), name='buy'),
+    path('room/', views.Room.as_view(), name='room'),
     path('account/<int:pk>/', views.AccountUpdate.as_view(), name='account_update'),
     path('refund/', views.Refund.as_view(), name='refund'),
     path('create_char', views.CreateChar.as_view(), name='create_char'),

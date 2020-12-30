@@ -1,0 +1,25 @@
+{% extends "match/base.html" %}
+
+{% block content %}
+
+
+
+<div class="container">
+  <div class="dm-box"><h1>やりとりしてる人たち</h1></div>
+  <div class="row flex-row flex-nowrap overflow-auto">
+
+{% for i in users %}
+      <div class="col-4 col-md-3 col-lg-2">
+        <div class="card" >
+          {% if i.user_img %}
+            <img class="card-img-top" src="{{ i.user_img }}">
+          {% endif %}
+          <div class="card-body">
+          <a href="{% url 'match:message_list' i.pk %}">{{ i.last_name }} {{ i.first_name}}さん</a>
+          </div>
+        </div>
+      </div>
+
+
+{% endfor %}
+{% endblock %}
