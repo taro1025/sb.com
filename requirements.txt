@@ -10,3 +10,4 @@ django-heroku
 tweepy
 django-storages
 boto3
+python-dotenv

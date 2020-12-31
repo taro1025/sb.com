@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-
+from os.path import join, dirname
+from dotenv import load_dotenv
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 #import sys
 #sys.path.append('../')
 #from match import models
@@ -36,8 +39,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    #'whitenoise.runserver_nostatic',
-    'storages',
+    'whitenoise.runserver_nostatic',
     'match.apps.MatchConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,12 +47,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-#    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 ROOT_URLCONF = 'project.urls'
@@ -162,17 +165,17 @@ AUTH_USER_MODEL = 'match.User'
 LOGIN_URL = 'match:login'
 LOGIN_REDIRECT_URL = 'match:top'
 
-STRIPE_PUBLIC_KEY = 'pk_test_51Hz06FBOB5bflgZhMAWTTInZiMz80kEvK6lxLDgBxgJleUpD7FiLf2DK9I27O15BWWqz8sVrHi39S9ieXNNvdixN00OW17mP5x'
-STRIPE_SECRET_KEY = 'sk_test_51Hz06FBOB5bflgZhLaeAQ27aeo1lNvkqcBCjNLaBSmNN6LOsnrI0eqg5pW2xKx9psz3mmlKf2p64dblT2FAk6cVm00eep7QfsF'
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
 
 
-SOCIAL_AUTH_TWITTER_KEY = 'Va2yCtCo2D1Q36dSakWZHRtwJ'
-SOCIAL_AUTH_TWITTER_SECRET = 'Aax3O1IPNSn9ISYvc6O4mP3Yl4m0fpj26Se7PekVvZ3z0aJ6Jr'
-ACCESS_TOKEN = "1333724810615001089-G0yUahEN3fT7hmagxN1B42UDWVVIyz"
-ACCESS_TOKEN_SECRET = "4BAVquX9WoFVn764wYjpujfr9aYpdbKd0ZD5vcE0G7cir"
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
+ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
+ACCESS_TOKEN_SECRET = os.environ.get('ACCESS_TOKEN_SECRET')
 
-BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAALPCKwEAAAAA8ksUfLH20gnidn7S2IZASWToPrI%3D1sHb913NjAJTIMSVEeFAoXQIU2yk0XlTx4MWE4IPx0RV4A7lRz'
+BEARER_TOKEN = os.environ.get('BEARER_TOKEN')
 # For social-auth-app-django
 
 
@@ -187,9 +190,9 @@ if not DEBUG:
 
 
 
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = S3_URL
@@ -198,4 +201,4 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'

@@ -28,7 +28,10 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 #auth.set_access_token(access_token,access_secret)
 api = tweepy.API(auth)
 from django.db.models import Q
-from django.core.files.storage import default_storage
+
+import boto3
+BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME  # バケット名
+
 
 def About(request):
     return render(request, 'match/about.html')
@@ -52,8 +55,7 @@ class Top(generic.ListView):
             char = form.cleaned_data.get('char')
             if char:
                 queryset = queryset.filter(user_char__in=char).distinct()
-            print("kya--n{}".format(char))
-        print("this is queryset.{}".format(queryset))
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -61,8 +63,6 @@ class Top(generic.ListView):
         context['users'] = self.get_queryset()
         context['form'] = SearchForm(self.request.GET or None)
         return context
-
-    
 
 
 
@@ -82,21 +82,15 @@ class AccountUpdate(generic.UpdateView):
     def get(self, request, *args, **kwargs):
         #self.object = None
         self.object = get_object_or_404(User, pk=self.kwargs['pk'])
-        print("ゆーあーるエル{}".format(self.object.twitter_url))
-
-        print("get だよよよ{}".format(self.object.user_verification_front.url))
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = get_object_or_404(User, pk=self.kwargs['pk'])
         self.object_list = None
         form = self.get_form()
-        print(form)
         if form.is_valid():
-            print("2")
             return self.form_valid(form)
         else:
-            print("3")
             return self.form_invalid(form)
 
 
@@ -126,7 +120,6 @@ class AccountUpdate(generic.UpdateView):
             gender='male'
         else:
             gender='female'
-        print(menter_form.user_routing_number)
         menter_form.user_phone_number = '+81' + str(menter_form.user_phone_number)
         account = stripe.Account.modify(
             account.id,
@@ -177,22 +170,32 @@ class AccountUpdate(generic.UpdateView):
 
         """フォームセーブ"""
         menter_form.user_account_id = account.id
-        print("これがアカウントID{}".format(menter_form.user_account_id))
         menter_form.save()
 
         menter = get_object_or_404(User, pk=menter_pk)
+
         """身分証のアップロード"""
-        front =  'match/media/' + menter.user_verification_front.name
-        back = 'match/media/' + menter.user_verification_back.name
-        print(front)
-        print(settings.BASE_DIR)
-        self.upload_identity(account.id, front, back)
+        key1 =  str(menter.user_verification_front)
+        key2 =  str(menter.user_verification_back)
+        front = settings.MEDIA_ROOT +'/'+ str(menter.user_verification_front)
+        back = settings.MEDIA_ROOT +'/'+ str(menter.user_verification_back)
+        print("fgjlag{}".format(front))
+        self.upload_identity(account.id, front, back, key1, key2)
 
         account.save()
 
         return redirect('match:user_detail', pk=menter_pk)
 
-    def upload_identity(self, acct_id, img_path_front, img_path_back):
+    def upload_identity(self, acct_id, img_path_front, img_path_back, key1, key2):
+        s3 = boto3.client('s3')
+        print("this is key1!{}".format(key1))
+        #s3.Object(BUCKET_NAME,str(front_key)).download_file(str(front_key))
+        a = s3.get_object(Bucket=BUCKET_NAME, Key=key1)
+
+        with open(img_path_front,"wb") as f:
+            f.write(a['Body'].read())
+
+
         #表側
         with open(img_path_front, "rb") as fp:
             res = stripe.FileUpload.create(
@@ -211,8 +214,16 @@ class AccountUpdate(generic.UpdateView):
             }})
 
         os.remove(img_path_front)
+        #os.remove(img_path_front)
+        s3.delete_object(Bucket=BUCKET_NAME, Key=key1)
+
+
 
         #裏側
+        b = s3.get_object(Bucket=BUCKET_NAME, Key=key2)
+
+        with open(img_path_back,"wb") as f:
+            f.write(b['Body'].read())
 
         with open(img_path_back, "rb") as fp:
             res = stripe.FileUpload.create(
@@ -230,6 +241,9 @@ class AccountUpdate(generic.UpdateView):
                     }
                 }})
         os.remove(img_path_back)
+        #os.remove(img_path_back)
+        s3.delete_object(Bucket=BUCKET_NAME, Key=key2)
+
 
 class Buy(generic.DetailView):
     model = User
