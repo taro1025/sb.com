@@ -8,3 +8,5 @@ dj-static
 dj-database-url
 django-heroku
 tweepy
+django-storages
+boto3
