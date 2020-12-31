@@ -177,8 +177,8 @@ class AccountUpdate(generic.UpdateView):
         """身分証のアップロード"""
         key1 =  str(menter.user_verification_front)
         key2 =  str(menter.user_verification_back)
-        front = settings.MEDIA_ROOT +'/'+ str(menter.user_verification_front)
-        back = settings.MEDIA_ROOT +'/'+ str(menter.user_verification_back)
+        front = 'front-img'
+        back = 'back-img'
         print("fgjlag{}".format(front))
         self.upload_identity(account.id, front, back, key1, key2)
 
