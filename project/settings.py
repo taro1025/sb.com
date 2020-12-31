@@ -46,16 +46,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
 ]
+os.environ['AWS_ACCESS_KEY_ID'] = 'AKIATRE2RNCLF5FP4O56'
+os.environ['AWS_SECRET_ACCESS_KEY'] = '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'
+os.environ['AWS_STORAGE_BUCKET_NAME'] = 'smash-match'
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = S3_URL
 
-    AWS_ACCESS_KEY_ID = os.environ['AKIATRE2RNCLF5FP4O56']
-    AWS_SECRET_ACCESS_KEY = os.environ['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']
-    AWS_STORAGE_BUCKET_NAME = os.environ['smash-match']
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-    MEDIA_URL = S3_URL
-
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
