@@ -28,7 +28,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 #auth.set_access_token(access_token,access_secret)
 api = tweepy.API(auth)
 from django.db.models import Q
-
+from django.core.files.storage import default_storage
 
 def About(request):
     return render(request, 'match/about.html')
@@ -62,7 +62,7 @@ class Top(generic.ListView):
         context['form'] = SearchForm(self.request.GET or None)
         return context
 
-
+    
 
 
 
