@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
+    'contact.apps.ContactConfig',
     'match.apps.MatchConfig',
     'django.contrib.admin',
     'django.contrib.auth',

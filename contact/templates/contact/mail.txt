@@ -1,0 +1,7 @@
+{% if name %}{{ name }}さんから{% else %}名無しさんから{% endif %}
+
+件名:{% if category %}{{ category }}{% endif %}
+
+内容:{{ text }}
+
+from:{{ email }}
