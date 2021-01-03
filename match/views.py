@@ -3,7 +3,7 @@ from .models import User, Message, BuyingHistory, Char
 from django.views import generic
 from django.views.generic.edit import ModelFormMixin
 from django.urls import reverse_lazy
-from .forms import LoginForm, UserCreateForm, UserUpdateForm, SendMessage, AccountUpdateForm, CreateCharForm, SearchForm
+from .forms import LoginForm, UserCreateForm, UserUpdateForm, SendMessage,  CreateCharForm, SearchForm, PrivateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView, LogoutView
@@ -74,10 +74,10 @@ class MenberDetail(generic.DetailView):
 
 
 
-class AccountUpdate(generic.UpdateView):
+class AccountUpdate(generic.FormView):
     model = User
     template_name = 'match/account_update.html'
-    form_class = AccountUpdateForm
+    form_class = PrivateForm
 
     def get(self, request, *args, **kwargs):
         #self.object = None
@@ -88,20 +88,22 @@ class AccountUpdate(generic.UpdateView):
         self.object = get_object_or_404(User, pk=self.kwargs['pk'])
         self.object_list = None
         form = self.get_form()
+        print("print_form{}".format(form))
         if form.is_valid():
+            print("1")
             return self.form_valid(form)
         else:
+            print("2")
             return self.form_invalid(form)
 
 
     def form_valid(self, form):
+        print("path form_valid")
         return self.create_account(form)
 
     def create_account(self, form):
         menter_pk = self.kwargs['pk']
-
-
-        menter_form = form.save(commit=False)
+        menter = get_object_or_404(User, pk=menter_pk)
 
 
         account = stripe.Account.create(
@@ -116,132 +118,111 @@ class AccountUpdate(generic.UpdateView):
         get_ip = get_client_ip(self.request)
         ip = get_ip[0]
 
-        if menter_form.user_gender == 1:
+        if form.cleaned_data.get('user_gender') == 1:
             gender='male'
         else:
             gender='female'
-        menter_form.user_phone_number = '+81' + str(menter_form.user_phone_number)
+        phone_number = '+81' + str(form.cleaned_data.get('user_phone_number'))
         account = stripe.Account.modify(
             account.id,
             individual={
-                'first_name_kana':menter_form.user_first_name_kana,
-                'first_name_kanji':menter_form.user_first_name_kanji,
-                'last_name_kana':menter_form.user_last_name_kana,
-                'last_name_kanji':menter_form.user_last_name_kanji,
-                'phone':menter_form.user_phone_number,
+                'first_name_kana':form.cleaned_data.get('user_first_name_kana'),
+                'first_name_kanji':form.cleaned_data.get('user_first_name_kanji'),
+                'last_name_kana':form.cleaned_data.get('user_last_name_kana'),
+                'last_name_kanji':form.cleaned_data.get('user_last_name_kanji'),
+                'phone':phone_number,
                 'gender':gender, #male or female
                 'address_kanji':{
                     "country":"JP",
-                    "state":menter_form.user_state_kanji,
-                    "city":menter_form.user_city_kanji,
-                    "town":menter_form.user_town_kanji,
-                    "line1":menter_form.user_line1_kanji,
-                    "line2":menter_form.user_line2_kanji,
-                    "postal_code":menter_form.user_postal_code,
+                    "state":form.cleaned_data.get('user_state_kanji'),
+                    "city":form.cleaned_data.get('user_city_kanji'),
+                    "town":form.cleaned_data.get('user_town_kanji'),
+                    "line1":form.cleaned_data.get('user_line1_kanji'),
+                    "line2":form.cleaned_data.get('user_line2_kanji'),
+                    "postal_code":form.cleaned_data.get('user_postal_code'),
                 },
                 'address_kana':{
                     "country":"JP",
-                    "state":menter_form.user_state_kana,
-                    "city":menter_form.user_city_kana,
-                    "town":menter_form.user_town_kana,
-                    "line1":menter_form.user_line1_kana,
-                    "line2":menter_form.user_line2_kana,
-                    "postal_code":menter_form.user_postal_code,
+                    "state":form.cleaned_data.get('user_state_kana'),
+                    "city":form.cleaned_data.get('user_city_kana'),
+                    "town":form.cleaned_data.get('user_town_kana'),
+                    "line1":form.cleaned_data.get('user_line1_kana'),
+                    "line2":form.cleaned_data.get('user_line2_kana'),
+                    "postal_code":form.cleaned_data.get('user_postal_code'),
                 },
                 'dob':{
-                    "day":menter_form.user_day,
-                    "month":menter_form.user_month,
-                    "year":menter_form.user_year,
+                    "day":form.cleaned_data.get('user_day'),
+                    "month":form.cleaned_data.get('user_month'),
+                    "year":form.cleaned_data.get('user_year'),
                 },
             },
             tos_acceptance={
-                'date':menter_form.user_tos_date,
+                'date':timezone.now(),
                 'ip': ip,
             }
         )
         account.external_accounts.create(external_account= {
             'object':'bank_account',
-            'account_number': menter_form.user_account_number,
-            'routing_number': menter_form.user_routing_number, #銀行コード+支店コード
-            'account_holder_name':menter_form.user_holder_name,                    'currency':'jpy',
+            'account_number': form.cleaned_data.get('user_account_number'),
+            'routing_number': form.cleaned_data.get('user_routing_number'), #銀行コード+支店コード
+            'account_holder_name':form.cleaned_data.get('user_holder_name'),
+            'currency':'jpy',
             'country':'jp',
             }
         )
 
-        """フォームセーブ"""
-        menter_form.user_account_id = account.id
-        menter_form.save()
+        """アカウントとストライプIDを結びつけ"""
+        menter.user_account_id = account.id
+        menter.save()
 
-        menter = get_object_or_404(User, pk=menter_pk)
+
+
 
         """身分証のアップロード"""
-        key1 =  str(menter.user_verification_front)
-        key2 =  str(menter.user_verification_back)
+        key1 =  str(form.cleaned_data.get('user_verification_front'))
+        key2 =  str(form.cleaned_data.get('user_verification_back'))
+        key1 =  form.cleaned_data.get('user_verification_front')
+        key2 =  form.cleaned_data.get('user_verification_back')
+
         front = 'front-img'
         back = 'back-img'
         self.upload_identity(account.id, front, back, key1, key2)
+
 
         account.save()
 
         return redirect('match:user_detail', pk=menter_pk)
 
     def upload_identity(self, acct_id, img_path_front, img_path_back, key1, key2):
-        s3 = boto3.client('s3')
-        print("this is key1!{}".format(key1))
-        #s3.Object(BUCKET_NAME,str(front_key)).download_file(str(front_key))
-        a = s3.get_object(Bucket=BUCKET_NAME, Key=key1)
+        res_f = stripe.FileUpload.create(
+            purpose='identity_document',
+            file=key1,
+            stripe_account=acct_id
+        )
+        verification_id = res_f["id"]
 
-        with open(img_path_front,"wb") as f:
-            f.write(a['Body'].read())
+        res_f = stripe.Account.modify(
+            acct_id,
+            individual = { "verification" :{
+            "document":{
+            "front": verification_id
+            }
+        }})
 
+        res_b = stripe.FileUpload.create(
+            purpose='identity_document',
+            file=key2,
+            stripe_account=acct_id
+        )
+        verification_id = res_b["id"]
 
-        #表側
-        with open(img_path_front, "rb") as fp:
-            res = stripe.FileUpload.create(
-                purpose='identity_document',
-                file=fp,
-                stripe_account=acct_id
-            )
-            verification_id = res["id"]
-
-            res = stripe.Account.modify(
+        res_b = stripe.Account.modify(
             acct_id,
             individual = { "verification" :{
                 "document":{
-                "front": verification_id
-                }
-            }})
-
-        os.remove(img_path_front)
-        #os.remove(img_path_front)
-        s3.delete_object(Bucket=BUCKET_NAME, Key=key1)
-
-
-
-        #裏側
-        b = s3.get_object(Bucket=BUCKET_NAME, Key=key2)
-
-        with open(img_path_back,"wb") as f:
-            f.write(b['Body'].read())
-
-        with open(img_path_back, "rb") as fp:
-            res = stripe.FileUpload.create(
-                purpose='identity_document',
-                file=fp,
-                stripe_account=acct_id
-            )
-            verification_id = res["id"]
-
-            res = stripe.Account.modify(
-                acct_id,
-                individual = { "verification" :{
-                    "document":{
-                    "back": verification_id
-                    }
-                }})
-        os.remove(img_path_back)
-        #os.remove(img_path_back)
-        s3.delete_object(Bucket=BUCKET_NAME, Key=key2)
+                "back": verification_id
+            }
+        }})
 
 
 class Buy(generic.DetailView):
@@ -450,12 +431,10 @@ class UserCreateComplete(generic.TemplateView):
 
         # 期限切れ
         except SignatureExpired:
-            print("3")
             return HttpResponseBadRequest()
 
         # tokenが間違っている
         except BadSignature:
-            print("2")
             return HttpResponseBadRequest()
 
 
@@ -464,7 +443,6 @@ class UserCreateComplete(generic.TemplateView):
             try:
                 user = User.objects.get(pk=user_pk)
             except User.DoesNotExist:
-                print("1")
                 return HttpResponseBadRequest()
 
             else:

@@ -89,44 +89,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     busy = models.BooleanField('忙しい', default=True)
     #決済に使う情報
-    user_account_number = models.CharField('口座番号', max_length=128, null=True)
-    user_routing_number = models.CharField('銀行コード＋支店コード', max_length=128, null=True)
-    user_holder_name = models.CharField('口座名義', max_length=32, null=True)
-
-
-    user_postal_code = models.CharField('郵便番号', max_length=128, null=True)
-
-    user_state_kana = models.CharField('都道府県（カナ）', max_length=32, null=True)
-    user_city_kana = models.CharField('区市町村（カナ）', max_length=32, null=True)
-    user_town_kana = models.CharField('町名（カナ）', max_length=32, null=True)
-    user_line1_kana = models.CharField('番地、号（カナ）', max_length=32, null=True)
-    user_line2_kana = models.CharField('建物・部屋番号・その他（任意）（カナ）', max_length=32, blank= True, null=True)
-
-    user_state_kanji = models.CharField('都道府県（漢字）', max_length=32, null=True)
-    user_city_kanji = models.CharField('区市町村（漢字）', max_length=32, null=True)
-    user_town_kanji = models.CharField('町名（漢字）', max_length=32, null=True)
-    user_line1_kanji = models.CharField('番地、号（漢字）', max_length=32, null=True)
-    user_line2_kanji = models.CharField('建物・部屋番号・その他（任意）（漢字）', max_length=32, blank= True, null=True)
-
-    user_day = models.IntegerField('生年月日（日）', null=True)
-    user_month = models.IntegerField('生年月日（月）', null=True)
-    user_year = models.IntegerField('生年月日（年）', null=True)
-
-    user_phone_number = models.CharField('電話番号', max_length=128, null=True)
-    user_tos_date = models.DateTimeField('タイムスタンプ', default=timezone.now)
-
-    GENDER = (
-        (1, '男'),
-        (2, '女'),
-    )
-
-    user_last_name_kanji = models.CharField('性（漢字）', max_length=32, null=True)
-    user_last_name_kana = models.CharField('性（かな）', max_length=32, null=True)
-    user_first_name_kanji = models.CharField('名（漢字）', max_length=32, null=True)
-    user_first_name_kana = models.CharField('名（かな）', max_length=32, null=True)
-    user_gender = models.IntegerField('性別', default=0, choices=GENDER)
-    user_verification_front = models.ImageField('本人確認（表）', null=True)
-    user_verification_back = models.ImageField('本人確認（裏）', null=True)
     user_account_id = models.CharField('決済に使うID', max_length=255, blank=True, null=True)
 
     """with twitter api"""
