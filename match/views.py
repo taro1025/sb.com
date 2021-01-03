@@ -179,7 +179,6 @@ class AccountUpdate(generic.UpdateView):
         key2 =  str(menter.user_verification_back)
         front = 'front-img'
         back = 'back-img'
-        print("fgjlag{}".format(front))
         self.upload_identity(account.id, front, back, key1, key2)
 
         account.save()
@@ -269,6 +268,7 @@ class Buy(generic.DetailView):
 
     def charge(self, flag, menter_pk, token):
         menter = get_object_or_404(User, pk=menter_pk)
+        select_course = ''
         try:
             # 購入処理
             if flag == 1:
@@ -283,6 +283,7 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
+                select_course ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course1)
             elif flag == 2:
                 charge = stripe.Charge.create(
                     amount=menter.course2,
@@ -294,6 +295,8 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
+                select_course ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course2)
+
             elif flag == 3:
                 charge = stripe.Charge.create(
                     amount=menter.course3,
@@ -305,15 +308,18 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
+                select_course ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course3)
         except stripe.error.CardError as e:
             # カード決済が上手く行かなかった(限度額超えとか)ので、メッセージと一緒に再度ページ表示
             context = self.get_context_data()
             context['message'] = 'Your payment cannot be completed. The card has been declined.'
             return render(self.request, 'match/menber_detail.html', context)
         else:
-            print("lkjhbvg")
+
             # 上手く購入できた。Django側にも購入履歴を入れておく
             BuyingHistory.objects.create(course=menter, user=self.request.user, stripe_id=charge.id)
+            menter.email_user('コースが購入されました', select_course, settings.EMAIL_HOST_USER)
+            self.request.user.email_user('購入が完了しました。', select_course, settings.EMAIL_HOST_USER)
             return redirect('match:message_list', pk=menter_pk)
 
 

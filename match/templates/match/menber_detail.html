@@ -34,7 +34,7 @@
         <tr>
           <th>request</th>
           <td>
-              {% if user.is_authenticated and menber_detail.busy == False %}
+              {% if user.is_authenticated and menber_detail.busy == False and menber_detail.pk != user.pk %}
                 <a href="{% url 'match:message_list' menber_detail.pk %}">相談する</a>
               {% endif %}
               {% if user.is_authenticated == False %}
