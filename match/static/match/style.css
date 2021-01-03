@@ -33,7 +33,13 @@ header .headline{
   text-align: center;
   padding: 20px 0;
 }
+.media {
+  padding-left: 14px;
 
+}
+.welcome {
+  display:inline-block;
+}
 
 .about-text-h2 {
   padding: 20px 0;
@@ -45,4 +51,34 @@ header .headline{
     background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
     background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
     background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
+
+@media (min-width: 992px) {
+ .welcome {
+   font-size: 7.0rem;
+ }
+}
+// 中デバイス（タブレット, 992px 未満）
+@media (max-width: 991.98px) {
+ .welcome {
+   font-size: 4.0rem;
+ }
+}
+// 小デバイス（横向きモバイル, 768px 未満）
+@media (max-width: 767.98px) {
+ .welcome {
+   font-size: 2.0rem;
+ }
+}
+// @include media-breakpoint-up(sm) {
+// 極小デバイス（縦向きモバイル, 576px 未満）
+@media (max-width: 575.98px) {
+ .welcome {
+   font-size: 1.0rem;
+ }
+}
+
+p.small-text {
+  text-align: right;
+  font-size: 100px;
 }

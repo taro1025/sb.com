@@ -88,17 +88,17 @@ class AccountUpdate(generic.FormView):
         self.object = get_object_or_404(User, pk=self.kwargs['pk'])
         self.object_list = None
         form = self.get_form()
-        print("print_form{}".format(form))
+
         if form.is_valid():
-            print("1")
+
             return self.form_valid(form)
         else:
-            print("2")
+
             return self.form_invalid(form)
 
 
     def form_valid(self, form):
-        print("path form_valid")
+
         return self.create_account(form)
 
     def create_account(self, form):
@@ -565,7 +565,6 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'match/user_form.html'
-
 
 
     def get_success_url(self):

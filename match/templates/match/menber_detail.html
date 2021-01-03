@@ -32,16 +32,47 @@
             <td>{% for char in menber_detail.user_char.all %}{{ char }}, {% endfor %}</td>
         </tr>
         <tr>
-          <th>request</th>
+          <th>教えてもらう</th>
           <td>
               {% if user.is_authenticated and menber_detail.busy == False and menber_detail.pk != user.pk %}
-                <a href="{% url 'match:message_list' menber_detail.pk %}">相談する</a>
+                <a href="{% url 'match:message_list' menber_detail.pk %}">相談ページ</a>
               {% endif %}
               {% if user.is_authenticated == False %}
-                メンターに相談するには<a href="{% url 'match:user_create' %}"  >会員登録</a>が必要です。
+                メンターに教えてもらうには<a href="{% url 'match:user_create' %}"  >会員登録</a>が必要です。
               {% endif %}
           </td>
         </tr>
-
+        <tr>
+            <th>自己紹介</th>
+            <td>{{menber_detail.my_profile}}</td>
+        </tr>
 </table>
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">コース1:{{ menber_detail.course1 }}円</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="item2-tab" data-toggle="tab" href="#item2" role="tab" aria-controls="item2" aria-selected="false">コース2:{{ menber_detail.course2 }}円</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="item3-tab" data-toggle="tab" href="#item3" role="tab" aria-controls="item3" aria-selected="false">コース3:{{ menber_detail.course3 }}円</a>
+  </li>
+</ul>
+<div class="tab-content">
+
+  <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="item1-tab">
+
+     {{ menber_detail.describe1 }}
+
+  </div>
+  <div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
+    {{ menber_detail.describe2}}
+
+  </div>
+  <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
+    {{ menber_detail.describe3}}
+
+  </div>
+
+</div>
 {% endblock %}

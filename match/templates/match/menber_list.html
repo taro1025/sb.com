@@ -12,7 +12,7 @@
     data-toggle="collapse"
     data-target="#example-1"
     aria-expand="false"
-    aria-controls="example-1">メンターを絞る</button>
+    aria-controls="example-1">メンターを探す</button>
 <div class="collapse" id="example-1">
   <div class="card card-body">
     <form action="{% url 'match:top' %}" method="GET">
@@ -33,28 +33,35 @@
   </div>
 </div>
  </div>
- <h1>スマッシュマッチへようこそ！</h1>
 
 
-  <div class="container">
-    <div class="row flex-row flex-nowrap overflow-auto">
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+  <h2 class="welcome">スマッシュマッチへようこそ！</h2>
+  </div>
+    </div>
+  <div class="row">
+    <div class="col-5 offset-8"><small>利用方法は<a href="{% url 'match:about' %}">こちら</small></a></div>
+  </div>
+
+
+
   {% for men in users %}
 
-        <div class="col-4 col-md-3 col-lg-2">
-          <div class="card" >
-            {% if men.user_img %}
-              <img class="card-img-top" src="{{ men.user_img }}">
-            {% endif %}
-            <div class="card-body">
-              <a class="card-title" href="{% url 'match:menber_detail' men.pk %}">{{ men.last_name }}さん</a>
-              <p class="card-text">使用キャラ:{% for char in men.user_char.all %}{{ char }},{% endfor %}</p>
-            </div>
-          </div>
-        </div>
+<div class="row">
+  <div class="media">
+  <img class="mr-3" src="{{ men.user_img }}" alt="no img">
+  <div class="media-body">
+    <h5 class="mt-0"><a href="{% url 'match:menber_detail' men.pk %}">{{ men.last_name }}さん</a></h5>
+    {{ men.my_profile}}
+  </div>
+ </div>
+</div>
 
 {% endfor %}
-
-  </div>
 </div>
 
 {% endblock %}

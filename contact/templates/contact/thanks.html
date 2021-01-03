@@ -1,6 +1,13 @@
 {% extends 'match/base.html' %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">お問い合わせ完了</li>
+  </ol>
+</nav>
+
   <h1>Thanks!</h1>
   <p>お問い合わせありがとうございました。</p>
 {% endblock %}

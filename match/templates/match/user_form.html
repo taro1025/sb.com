@@ -8,40 +8,58 @@
 </nav>
 <table class="table">
 
+<div class="container">
+  <div class="row">
 <form action="" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
     {{ form.non_field_errors }}
       <p>
-      {{ form.last_name }}
-      {{ form.first_name }}
+      姓:{{ form.last_name }}
       </p>
       <p>
-      {{ form.email }}
+      名:{{ form.first_name }}
       </p>
       <p>
-      {{ form.user_char }}
-      {{ form.user_img }}
+      mail:{{ form.email }}
       </p>
+      <p>
+      使用キャラ:{{ form.user_char }}
+      </p>
+      <p>
+        自己紹介:{{ form.my_profile }}
+      </p>
+
 
       {{ form.menter }}
 
       {% if user.menter == 1 %}
         <p>
-        {{ form.course1 }}:
-        {{ form.describe1 }}
+        コース1の料金:{{ form.course1 }}
         </p>
         <p>
-        {{ form.course2 }}:
-        {{ form.describe2 }}
+        コース1の説明:{{ form.describe1 }}
         </p>
         <p>
-        {{ form.course3 }}:
-        {{ form.describe3 }}
+        コース2の料金:{{ form.course2 }}
+        </p>
+        <p>
+        コース2の説明:{{ form.describe2 }}
+        </p>
+        <p>
+        コース3の料金:{{ form.course3 }}
+        </p>
+        <p>
+        コース3の説明:{{ form.describe3 }}
         </p>
         <p><a href="{% url 'match:account_update' user.pk %}">詳細設定(依頼を受ける際に必要になります。)</a></p>
         <br>
-       <p>{{ form.busy }} 仕事を受け付けない </p>
+       <p>{{ form.busy }} 依頼を受け付けない </p>
       {% endif %}
     {% csrf_token %}
+
     <button type="submit" class="btn btn-success btn-lg" >送信</button>
+    </div>
 </form>
+  </div>
+</div>
 {% endblock %}

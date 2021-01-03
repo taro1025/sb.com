@@ -83,9 +83,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     course1 = models.IntegerField('コース1', blank=True, null=True)
     course2 = models.IntegerField('コース2', blank=True, null=True)
     course3 = models.IntegerField('コース3', blank=True, null=True)
-    describe1 = models.TextField('コース1の説明' ,blank=True, null=True)
-    describe2 = models.TextField('コース2の説明', blank=True, null=True)
-    describe3 = models.TextField('コース3の説明', blank=True, null=True)
+
+    describe_text="""(以下はテンプレートです。)
+・値段
+
+
+・コースの内容
+    （対戦してフィードバックする、リプレイを送ってもらってフィードバックする、
+    質問をする権利を○日まで与える。。。などコース内容は自由に決めても良いですが、
+    永久コンサル、戦闘力〇〇まで上げる等はトラブルの元になりやすいのでなるべくお控えください。）
+
+
+・コースを終える基準（〜日まで、○回戦するまで、○本のリプレイを送ってもらうまで、等。
+    明確な終了条件を設けるようにお願いします。）"""
+
+    describe1 = models.TextField('コース1の説明' ,blank=True, default=describe_text)
+    describe2 = models.TextField('コース2の説明', blank=True, default=describe_text)
+    describe3 = models.TextField('コース3の説明', blank=True, default=describe_text)
 
     busy = models.BooleanField('忙しい', default=True)
     #決済に使う情報
