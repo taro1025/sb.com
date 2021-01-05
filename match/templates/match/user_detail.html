@@ -34,8 +34,8 @@
         <tr>
             <th>ツイッターと提携する</th>
             <td>
-              <button type="button" class="button" onclick="location.href='{{ re_url }}'">
-                Twitter でログイン
+              <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Twitterの名前とプロフィール画像がスマッシュマッチに適応されます。" onclick="location.href='{{ re_url }}'">
+                Twitter認証する
               </button>
             </td>
         </tr>
@@ -49,29 +49,12 @@
             <td>{{ user.menter }}</td>
         </tr>
         {% if user.menter == 1 %}
-          {% if user.course1 %}
+
           <tr>
-              <th>コース1の値段:{{ user.course1 }}円</th>
-              <td>{{user.describe1}}</td>
-            </tr>
-          {% endif %}
-          {% if user.course2 %}
-            <tr>
-              <th>コース2の値段:{{ user.course2 }}円</th>
-              <td>{{user.describe2}}</td>
-            </tr>
-          {% endif %}
-          {% if user.course3 %}
-            <tr>
-              <th>コース3の値段:{{ user.course3 }}円</th>
-              <td>{{user.describe3}}</td>
-            </tr>
-            <tr>
-              <th>仕事を受け付けない</th>
-              <td>{{ user.busy }}</td>
-            </tr>
-          {% endif %}
-        {% endif %}
+            <th>仕事を受け付けない</th>
+            <td>{{ user.busy }}</td>
+          </tr>
+
 
 </table>
 <ul class="nav nav-tabs" role="tablist">
@@ -89,17 +72,18 @@
 
   <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="item1-tab">
 
-     {{ user.describe1 }}
+     {{ user.describe1 | linebreaksbr }}
 
   </div>
   <div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
-    {{ user.describe2}}
+    {{ user.describe2 | linebreaksbr }}
 
   </div>
   <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
-    {{ user.describe3}}
+    {{ user.describe3 | linebreaksbr }}
 
   </div>
 
 </div>
+{% endif %}
 {% endblock %}

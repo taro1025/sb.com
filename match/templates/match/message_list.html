@@ -40,13 +40,13 @@
 <div class="tab-content">
 
   <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="item1-tab">
-    {{ menter.describe1 }}:このコースにする<a href="{{request.get_full_path_info}}1/">購入ページへ</a>
+    {{ menter.describe1 | linebreaksbr  }}:このコースにする<a href="{{request.get_full_path_info}}1/">購入ページへ</a>
   </div>
   <div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
-    {{ menter.describe2 }}:このコースにする<a href="{{request.get_full_path_info}}2/">購入ページへ</a>
+    {{ menter.describe2 | linebreaksbr  }}:このコースにする<a href="{{request.get_full_path_info}}2/">購入ページへ</a>
   </div>
   <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
-    {{ menter.describe3 }}:このコースにする<a href="{{request.get_full_path_info}}3/">購入ページへ</a>
+    {{ menter.describe3  | linebreaksbr }}:このコースにする<a href="{{request.get_full_path_info}}3/">購入ページへ</a>
   </div>
 
 </div>
