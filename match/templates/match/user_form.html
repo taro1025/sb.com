@@ -34,22 +34,22 @@
 
       {% if user.menter == 1 %}
         <p>
-        コース1の料金:{{ form.course1 }}
+        コース1の料金 (単位:円){{ form.course1 }}円
         </p>
         <p>
-        コース1の説明:{{ form.describe1  }}
+        コース1の説明{{ form.describe1  }}
         </p>
         <p>
-        コース2の料金:{{ form.course2 }}
+        コース2の料金 (単位:円){{ form.course2 }}円
         </p>
         <p>
-        コース2の説明:{{ form.describe2 }}
+        コース2の説明{{ form.describe2 }}
         </p>
         <p>
-        コース3の料金:{{ form.course3 }}
+        コース3の料金 (単位:円){{ form.course3 }}円
         </p>
         <p>
-        コース3の説明:{{ form.describe3  }}
+        コース3の説明{{ form.describe3  }}
         </p>
         <p><a href="{% url 'match:account_update' user.pk %}">詳細設定(依頼を受ける際に必要になります。)</a></p>
         <br>
