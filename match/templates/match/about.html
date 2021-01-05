@@ -50,6 +50,11 @@
         <hr class="hr">
         <p>退会は<a href="{% url 'match:withdrawal' %}">こちら</a></p>
       </div>
+      {% else %}
+      <div class="about-text">
+        <h1>会員登録</h1>
+        <hr class="hr">
+        <p>会員登録は<a href="{% url 'match:user_create' %}">こちら</a></p>    
       {% endif %}
     </div>
   </div>
