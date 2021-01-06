@@ -70,7 +70,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     MENTER = (
         (1, 'メンター'),
-        (2, '弟子'),
+        (2, 'メンティー'),
     )
 
 

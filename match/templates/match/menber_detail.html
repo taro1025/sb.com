@@ -34,7 +34,7 @@
         <tr>
           <th>教えてもらう</th>
           <td>
-              {% if user.is_authenticated and menber_detail.busy == False and menber_detail.pk != user.pk %}
+              {% if user.is_authenticated and  menber_detail.pk != user.pk and menber_detail.menter == 1 and menber_detail.busy == False %}
                 <a href="{% url 'match:message_list' menber_detail.pk %}">相談ページ</a>
               {% endif %}
               {% if user.is_authenticated == False %}
