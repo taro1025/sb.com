@@ -569,3 +569,7 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
 
     def get_success_url(self):
         return resolve_url('match:user_detail', pk=self.kwargs['pk'])
+
+
+def google(request):
+    return render(request, 'googlebd6504b52e7a8613.html')

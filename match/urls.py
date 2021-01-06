@@ -24,4 +24,5 @@ urlpatterns=[
     path('complete/twitter/', views.RelateTwitter, name='relate_twitter'),
     #path('select_course/<int:pk>/', views.CourseList.as_view(), name='course_list'),
     path('', views.Top.as_view(), name='top'),
+    path('googlebd6504b52e7a8613.html/', views.google, name='google'),
 ]

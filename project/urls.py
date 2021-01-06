@@ -34,6 +34,7 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('', include('match.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('googlebd6504b52e7a8613.html/', views.google, name='google'),
 
 ]
 
