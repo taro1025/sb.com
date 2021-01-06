@@ -24,8 +24,8 @@ from .sitemaps import (
 )
 
 sitemaps = {
-    'blog': BlogPostSitemap,
-    'static': StaticViewSitemap,
+    'top': BlogPostSitemap,
+    'about': StaticViewSitemap,
 }
 
 
