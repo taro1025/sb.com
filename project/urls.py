@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('contact/', include('contact.urls')),
     path('', include('match.urls')),
-    path('sitemap.xml', views.SiteMap, name='sitemap'),
+    path('site_map.xml', views.SiteMap, name='sitemap'),
 
 ]
 
