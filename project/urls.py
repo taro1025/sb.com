@@ -17,23 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.sitemaps.views import sitemap
-from .sitemaps import (
-    BlogPostSitemap,
-    StaticViewSitemap,
-)
-
-sitemaps = {
-    'top': BlogPostSitemap,
-    'about': StaticViewSitemap,
-}
+#from django.contrib.sitemaps.views import sitemap
+from . import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('contact/', include('contact.urls')),
     path('', include('match.urls')),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('sitemap.xml', views.SiteMap, name='sitemap'),
 
 ]
 

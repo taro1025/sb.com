@@ -179,8 +179,7 @@ class AccountUpdate(generic.FormView):
 
 
         """身分証のアップロード"""
-        key1 =  str(form.cleaned_data.get('user_verification_front'))
-        key2 =  str(form.cleaned_data.get('user_verification_back'))
+
         key1 =  form.cleaned_data.get('user_verification_front')
         key2 =  form.cleaned_data.get('user_verification_back')
 
