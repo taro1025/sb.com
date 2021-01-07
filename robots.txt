@@ -1,0 +1,1 @@
+Sitemap:https://smash-match.s3-ap-northeast-1.amazonaws.com/site_map.xml
