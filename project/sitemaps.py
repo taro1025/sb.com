@@ -18,6 +18,8 @@ class BlogPostSitemap(Sitemap):
 
     # モデルに get_absolute_url() が定義されている場合は不要
     def location(self, item):
+
+
         return reverse(item)
 
 

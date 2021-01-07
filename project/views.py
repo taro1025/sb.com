@@ -15,4 +15,4 @@ from django.conf import settings
 
 def SiteMap(request):
 
-    return redirect('https://smash-match.s3-ap-northeast-1.amazonaws.com/sitemap.xml')
+    return redirect('https://smash-match.s3-ap-northeast-1.amazonaws.com/site_map.xml')

@@ -27,7 +27,7 @@
         <tr>
             <th>プロフ画像</th>
             {% if user.user_img %}
-              <td><img src="{{ user.user_img }}"></td>
+              <td><img src="{{ user.user_img }}" alt="no img"></td>
             {% endif %}
         </tr>
         {% if re_url %}
