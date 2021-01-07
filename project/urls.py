@@ -36,7 +36,7 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('', include('match.urls')),
     #path('site_map.xml', views.SiteMap, name='sitemap'),
-    path('site_map.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('site_amap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 
 ]
 
