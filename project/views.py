@@ -4,7 +4,7 @@ from .sitemaps import (
 )
 from django.contrib.sitemaps.views import sitemap,index
 from django.views import generic
-from django.shortcuts import redirect
+from django.shortcuts import redirect,render
 site = {
     'top': BlogPostSitemap,
     'about': StaticViewSitemap,
@@ -16,3 +16,7 @@ from django.conf import settings
 def SiteMap(request):
 
     return redirect('https://smash-match.s3-ap-northeast-1.amazonaws.com/site_map.xml')
+
+
+def robot(request):
+    return render(request, 'match/robot.html')

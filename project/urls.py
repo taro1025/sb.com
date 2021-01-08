@@ -37,7 +37,7 @@ urlpatterns = [
     path('', include('match.urls')),
     #path('site_map.xml', views.SiteMap, name='sitemap'),
     path('site_amap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
-
+    path('robots.txt', views.robot, name='robot'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
