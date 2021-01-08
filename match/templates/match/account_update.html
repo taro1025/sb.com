@@ -7,11 +7,15 @@
     <li class="breadcrumb-item active" aria-current="page">ユーザー詳細設定</li>
   </ol>
 </nav>
+
+<div class="container">
+  <div class="row">
+<p>※詳細設定は依頼を受ける際に必要となります。後から設定することも可能です。<small><a href="{% url 'match:user_detail' user.pk %}">スキップする</a></small></p>
 <form action="" method="POST" enctype="multipart/form-data">
     {{ form.non_field_errors }}
     <table class="table">
             <tr>
-                <th>　アカウントナンバー </th>
+                <th>　口座番号 </th>
                 <td>{{ form.user_account_number }}</td>
             </tr>
             <tr>
@@ -23,7 +27,7 @@
                 <td>{{ form.user_holder_name }}</td>
             </tr>
             <tr>
-                <th>郵便番号</th>
+                <th>郵便番号 例:1018650</th>
                 <td>{{ form.user_postal_code }}</td>
             </tr>
             <tr>
@@ -71,7 +75,7 @@
               <td>{{ form.user_year }}年 {{ form.user_month }}月 {{ form.user_day }}日</td>
             </tr>
             <tr>
-                <th>電話番号</th>
+                <th>電話番号 例:08012341234</th>
                 <td>{{ form.user_phone_number }}</td>
             </tr>
             <tr>
@@ -95,15 +99,22 @@
                 <td>{{ form.user_gender }}</td>
             </tr>
             <tr>
-                <th>本人確認書類（表）</th>
+                <th>
+                  本人確認書類（表) ※パスポート,マイナンバー(顔つき),パスポート,住基カード(顔つき),運転免許証
+
+                </th>
                 <td>{{ form.user_verification_front }}</td>
             </tr>
             <tr>
-                <th>本人確認書類（裏）</th>
+                <th>
+                  本人確認書類（裏) ※パスポート,マイナンバー(顔つき),パスポート,住基カード(顔つき),運転免許証
+                </th>
                 <td>{{ form.user_verification_back }}</td>
             </tr>
     </table>
     {% csrf_token %}
     <button type="submit" class="btn btn-success btn-lg" >送信</button>
 </form>
+  </div>
+</div>
 {% endblock %}

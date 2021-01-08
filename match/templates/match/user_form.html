@@ -51,14 +51,16 @@
         <p>
         コース3の説明{{ form.describe3  }}
         </p>
-        <p><a href="{% url 'match:account_update' user.pk %}">詳細設定(依頼を受ける際に必要になります。)</a></p>
         <br>
        <p>{{ form.busy }} 依頼を受け付けない </p>
       {% endif %}
     {% csrf_token %}
 
     <button type="submit" class="btn btn-success btn-lg" >送信</button>
+
     </div>
+    <div class="detail"><a href="{% url 'match:account_update' user.pk %}">詳細設定はこちら</a></div>
+
 </form>
   </div>
 </div>

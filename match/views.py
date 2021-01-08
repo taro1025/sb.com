@@ -363,7 +363,6 @@ class MessageList(generic.ListView, ModelFormMixin):
         to_user_pk = self.kwargs['pk']
 
         message = form.save(commit=False)
-        print("これ！{}".format(to_user_pk))
         message.room = self.request.user
         message.to_user = get_object_or_404(User, pk=to_user_pk)
         message.created_at = timezone.now()
@@ -568,6 +567,14 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
 
     def get_success_url(self):
         return resolve_url('match:user_detail', pk=self.kwargs['pk'])
+
+    def form_valid(self, form):
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        if user.user_account_id:
+            return redirect('match:user_detail', self.kwargs['pk'])
+        else:
+            return redirect('match:account_update', self.kwargs['pk'])
+
 
 
 def google(request):

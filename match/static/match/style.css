@@ -78,6 +78,11 @@ header .headline{
  }
 }
 
+.detail {
+  text-align: right;
+  background-color: red;
+}
+
 p.small-text {
   text-align: right;
   font-size: 100px;
