@@ -94,7 +94,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
     ・コースを終える基準（〜日まで、○回戦するまで、○本のリプレイを送ってもらうまで、等。
-    明確な終了条件を設けるようにお願いします。）"""
+    明確な終了条件を設けるようにお願いします。)
+
+    ・コース履行中の連絡手段(Line, Discord, Twitter等)"""
 
     describe1 = models.TextField('コース1の説明' ,blank=True, default=describe_text)
     describe2 = models.TextField('コース2の説明', blank=True, default=describe_text)

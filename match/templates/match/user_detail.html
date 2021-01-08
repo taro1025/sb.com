@@ -46,14 +46,18 @@
         </tr>
         <tr>
             <th>メンターorメンティー</th>
-            <td>{{ user.menter }}</td>
+            {% if user.menter == 2 %}
+            <td>メンティー</td>
+            {% else %}
+            <td>メンター</td>
+            {% endif %}
         </tr>
         {% if user.menter == 1 %}
 
           <tr>
             <th>依頼の可否</th>
             <td>
-              {% if user.busy == True %}}
+              {% if user.busy == True %}
                 受け付けない
               {% else %}
                 受け付ける

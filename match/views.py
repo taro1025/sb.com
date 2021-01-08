@@ -566,15 +566,12 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
 
 
     def get_success_url(self):
-        return resolve_url('match:user_detail', pk=self.kwargs['pk'])
-
-    def form_valid(self, form):
         user = get_object_or_404(User, pk=self.kwargs['pk'])
+        print(user.user_account_id)
         if user.user_account_id:
-            return redirect('match:user_detail', self.kwargs['pk'])
+            return resolve_url('match:user_detail', self.kwargs['pk'])
         else:
-            return redirect('match:account_update', self.kwargs['pk'])
-
+            return resolve_url('match:account_update', self.kwargs['pk'])
 
 
 def google(request):

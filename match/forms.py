@@ -6,7 +6,8 @@ from django.contrib.auth.forms import (
 from django.contrib.auth import get_user_model
 from .models import Message, Char
 from django.utils import timezone
-
+from django.core.exceptions import ValidationError
+ 
 User = get_user_model()
 #ModelMultipleChoiceField
 
@@ -114,9 +115,28 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('last_name','first_name','my_profile', 'email','user_char','user_img','menter','course1','course2','course3','describe1','describe2','describe3','busy')
+        fields = ('last_name','first_name','my_profile','user_char','user_img','menter','course1','course2','course3','describe1','describe2','describe3','busy')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
+    def clean(self):
+        cd = self.cleaned_data
+
+        course1 = cd.get('course1')
+        course2 = cd.get('course2')
+        course3 = cd.get('course3')
+
+        if course1:
+            if course1 < 3000:
+                raise ValidationError("料金は3000円以上です。")
+        if course2:
+            if course2 < 3000:
+                raise ValidationError("料金は3000円以上です。")
+        if course3:
+            if course3 < 3000:
+                raise ValidationError("料金は3000円以上です。")
+
+        return cd

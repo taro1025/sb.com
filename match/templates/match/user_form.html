@@ -11,54 +11,76 @@
 <div class="container">
   <div class="row">
 <form action="" method="POST" enctype="multipart/form-data">
+  <table class="table">
+    <div class="alert alert-warning" role="alert">{{ form.non_field_errors }}</div>
   <div class="form-group">
-    {{ form.non_field_errors }}
-      <p>
-      姓:{{ form.last_name }}
-      </p>
-      <p>
-      名:{{ form.first_name }}
-      </p>
-      <p>
-      mail:{{ form.email }}
-      </p>
-      <p>
-      使用キャラ:{{ form.user_char }}
-      </p>
-      <p>
-        自己紹介:{{ form.my_profile }}
-      </p>
+          <tr>
+              <th>姓</th>
+              <td>{{ form.last_name }}</td>
+          </tr>
+          <tr>
+              <th>名</th>
+              <td>{{ form.first_name }}</td>
+          </tr>
+          <tr>
+              <th>使用キャラ</th>
+              <td>{{ form.user_char }}</td>
+          </tr>
 
 
-      {{ form.menter }}
+          <tr>
+              <th>自己紹介</th>
+              <td>{{ form.my_profile }}</td>
+          </tr>
+          <tr>
+              <th>メンターorメンティー</th>
+              <td>{{ form.menter }}</td>
+          </tr>
 
-      {% if user.menter == 1 %}
-        <p>
-        コース1の料金 (単位:円){{ form.course1 }}円
-        </p>
-        <p>
-        コース1の説明{{ form.describe1  }}
-        </p>
-        <p>
-        コース2の料金 (単位:円){{ form.course2 }}円
-        </p>
-        <p>
-        コース2の説明{{ form.describe2 }}
-        </p>
-        <p>
-        コース3の料金 (単位:円){{ form.course3 }}円
-        </p>
-        <p>
-        コース3の説明{{ form.describe3  }}
-        </p>
-        <br>
-       <p>{{ form.busy }} 依頼を受け付けない </p>
-      {% endif %}
-    {% csrf_token %}
+
+          {% if user.menter == 1 %}
+          <tr>
+            <th>
+              コース料金について
+            </th>
+            <td>コースの料金は3000円以上でないと設定できません。ご了承ください。</td>
+          </tr>
+          <tr>
+            <th>コース1の料金 (単位:円)</th>
+            <td>{{ form.course1 }}円<td>
+          </tr>
+          <tr>
+            <th>コース1の説明</th>
+            <td>{{ form.describe1  }}</td>
+          </tr>
+          <tr>
+            <th>コース2の料金 (単位:円)</th>
+            <td>{{ form.course2 }}円</td>
+          </tr>
+          <tr>
+            <th>コース2の説明</th>
+            <td>{{ form.describe2 }}</td>
+          </tr>
+          <tr>
+            <th>コース3の料金 (単位:円)</th>
+            <td>{{ form.course3 }}円</td>
+          </tr>
+          <tr>
+            <th>コース3の説明</th>
+            <td>{{ form.describe3  }}</td>
+          </tr>
+          <tr>
+            <th>依頼を受け付けない</th>
+            <td>{{ form.busy }}</td>
+          </tr>
+          {% endif %}
+        {% csrf_token %}
+    </div>
+  </table>
 
     <button type="submit" class="btn btn-success btn-lg" >送信</button>
 
-    </div>
+
     <div class="detail"><a href="{% url 'match:account_update' user.pk %}">詳細設定はこちら</a></div>
 
 </form>
