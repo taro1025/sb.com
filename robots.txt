@@ -1,1 +1,0 @@
-Sitemap:https://smash-match.herokuapp.com/site_amap.xml
