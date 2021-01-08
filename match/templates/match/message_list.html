@@ -17,6 +17,12 @@
     {% endif %}
   {% endif %}
 {% endfor %}
+
+<!--購入完了時のメッセージ-->
+{% if buy %}
+    <div class="alert alert-success"  role="alert">{{ buy }}</div>
+{% endif %}
+
 <form action="" method="POST">
 {{ form.as_p }}
     <button type="submit">送信</button>
@@ -24,7 +30,7 @@
 </form>
 
 {% if user.menter == 2 %}
-
+{% if menter.busy == False %}
 <h2>コースを選ぶ</h2>
 <ul class="nav nav-tabs" role="tablist">
   <li class="nav-item">
@@ -50,6 +56,9 @@
   </div>
 
 </div>
+{% else %}
+<h3>現在、メンターは依頼を受け付けていません。</h3>
+{% endif %}
 
 
 {% endif %}

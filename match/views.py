@@ -8,8 +8,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView, LogoutView
 )
+from urllib.parse import urlencode
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.signing import BadSignature, SignatureExpired, loads, dumps
 from django.http import Http404, HttpResponseBadRequest, HttpResponse
@@ -263,7 +265,7 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
-                select_course ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course1)
+                select_course ='コースが購入されました。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course1)
             elif flag == 2:
                 charge = stripe.Charge.create(
                     amount=menter.course2,
@@ -275,7 +277,7 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
-                select_course ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course2)
+                select_course ='コースが購入されました。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course2)
 
             elif flag == 3:
                 charge = stripe.Charge.create(
@@ -288,7 +290,7 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
-                select_course ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course3)
+                select_course ='コースが購入されました。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course3)
         except stripe.error.CardError as e:
             # カード決済が上手く行かなかった(限度額超えとか)ので、メッセージと一緒に再度ページ表示
             context = self.get_context_data()
@@ -298,10 +300,16 @@ class Buy(generic.DetailView):
 
             # 上手く購入できた。Django側にも購入履歴を入れておく
             BuyingHistory.objects.create(course=menter, user=self.request.user, stripe_id=charge.id)
-            menter.email_user('コースが購入されました', select_course, settings.EMAIL_HOST_USER)
-            self.request.user.email_user('購入が完了しました。', select_course, settings.EMAIL_HOST_USER)
-            return redirect('match:message_list', pk=menter_pk)
+            menter.email_user('コースが購入されました。', select_course, settings.EMAIL_HOST_USER)
+            menter.busy = True
+            menter.save()
 
+            self.request.user.email_user('購入が完了しました。', select_course, settings.EMAIL_HOST_USER)
+            """ページに「購入完了」を載せる"""
+            response = resolve_url('match:message_list', menter_pk)
+            parameters = urlencode(dict(param_a='購入完了'))
+            url = f'{response}?{parameters}'
+            return redirect(url)
 
 class Room(generic.ListView):
     model = User
@@ -339,6 +347,9 @@ class MessageList(generic.ListView, ModelFormMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if 'param_a' in self.request.GET:
+            buy = self.request.GET['param_a']
+            context['buy'] = buy
         context['pk'] = self.kwargs['pk']
         context['menter'] = get_object_or_404(User, pk=self.kwargs['pk'])
         return context

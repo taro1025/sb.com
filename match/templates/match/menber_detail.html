@@ -7,6 +7,7 @@
   </ol>
 </nav>
 
+
 <table class="table">
         <tr>
             <th>プロフ画像</th>
@@ -34,7 +35,7 @@
         <tr>
           <th>教えてもらう</th>
           <td>
-              {% if user.is_authenticated and  menber_detail.pk != user.pk and menber_detail.menter == 1 and menber_detail.busy == False %}
+              {% if user.is_authenticated and  menber_detail.pk != user.pk and menber_detail.menter == 1 %}
                 <a href="{% url 'match:message_list' menber_detail.pk %}">相談ページ</a>
               {% endif %}
               {% if user.is_authenticated == False %}
