@@ -1,0 +1,61 @@
+{% extends "match/base.html" %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">特定商取引法に基づく表示</li>
+  </ol>
+</nav>
+<table class="table">
+
+        <tr>
+            <th>販売業者</th>
+            <td>崎野　倫太郎</td>
+        </tr>
+        <tr>
+            <th>所在地</th>
+            <td>〒241-0005 神奈川県横浜市旭区白根2丁目39-12-2</td>
+        </tr>
+
+        <tr>
+            <th>電話番号</th>
+            <td>080 5070 4773</td>
+        </tr>
+        <tr>
+            <th>メールアドレス</th>
+            <td>game4967@gmail.com</td>
+        </tr>
+        <tr>
+            <th>運営統括責任者</th>
+            <td>崎野　倫太郎</td>
+        </tr>
+        <tr>
+            <th>商品代金以外の必要料金</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th>返品・交換の方法</th>
+            <td>商品代金を支払ってから1ヶ月以内かつ正当な理由があると運営責任者が判断した場合に限り、商品代金の10%の返金をします。
+              商品代金の90%に関しては購入者と出品者の話し合いで解決をしてください。
+            </td>
+        </tr>
+        <tr>
+            <th>引き渡し時期</th>
+            <td>購入者と出品者の話し合いで決めます。</td>
+        </tr>
+        <tr>
+            <th>支払い方法</th>
+            <td>クレジットカードやデビットカード</td>
+        </tr>
+        <tr>
+            <th>支払い時期</th>
+            <td>クレジットカード：各カード会社引き落とし日</td>
+        </tr>
+        <tr>
+            <th>販売価格</th>
+            <td>3000円以上。出品者が決めます。</td>
+        </tr>
+</table>
+
+
+{% endblock %}

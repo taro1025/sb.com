@@ -592,3 +592,7 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
 
 def google(request):
     return render(request, 'match/googlebd6504b52e7a8613.html')
+
+
+def TransactionLow(request):
+    return render(request, 'match/transaction_low.html')

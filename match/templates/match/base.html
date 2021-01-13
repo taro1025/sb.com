@@ -108,4 +108,18 @@
 
 <script type="text/javascript">$('[data-toggle="tooltip"]').tooltip();</script>
     </body>
+
+
+<footer class="footer">
+  <link rel="stylesheet" href="{% static 'match/footer.css' %}">
+<div class="container">
+  <div class="row">
+    <p class="col"><a href="{% url 'match:transaction_low' %}">特定商取引法に基づく表示</a></p>
+    <p class="col"><a href="{% url 'match:about' %}">ご利用方法</a></p>
+    <p class="col"><a href="{% url 'contact:top' %}">お問い合わせ</a></p>
+
+  </div>
+</div>
+</footer>
+
 </html>
