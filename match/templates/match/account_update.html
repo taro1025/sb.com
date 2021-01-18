@@ -10,7 +10,7 @@
 
 <div class="container">
   <div class="row">
-<p>※詳細設定は依頼を受ける際に必要となります。後から設定することも可能です。<small><a href="{% url 'match:user_detail' user.pk %}">スキップする</a></small></p>
+<p>※詳細設定は依頼を受ける際に必要となります。後からユーザー情報更新ページより、設定することも可能です。<small><a href="{% url 'match:user_detail' user.pk %}">スキップする</a></small></p>
 <form action="" method="POST" enctype="multipart/form-data">
     {{ form.non_field_errors }}
     <table class="table">
@@ -23,7 +23,16 @@
                 <td>{{ form.user_routing_number }}</td>
             </tr>
             <tr>
-                <th>口座名義</th>
+                <th>口座名義<br>
+                  ※<br>
+                  <small>
+                    ・カナ入力(全角)<br>
+                  ・苗字と名前の空白は全角スペース<br>
+                  でないと正しくお金を受け取ることができません。<br>
+                  例:スマッシュ　タロウ<br>
+                  詳しくはお使いの銀行のサイトでご確認ください。
+                  </small>
+                </th>
                 <td>{{ form.user_holder_name }}</td>
             </tr>
             <tr>

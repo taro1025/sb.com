@@ -12,7 +12,9 @@
   <div class="row">
 <form action="" method="POST" enctype="multipart/form-data">
   <table class="table">
+    {% if form.non_field_errors %}
     <div class="alert alert-warning" role="alert">{{ form.non_field_errors }}</div>
+    {% endif %}
   <div class="form-group">
           <tr>
               <th>姓</th>
@@ -43,7 +45,7 @@
             <th>
               コース料金について
             </th>
-            <td>コースの料金は3000円以上でないと設定できません。ご了承ください。</td>
+            <td>コースの料金は3000円以上から設定可能です。</td>
           </tr>
           <tr>
             <th>コース1の料金 (単位:円)</th>
