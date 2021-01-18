@@ -16,6 +16,7 @@
     <table class="table">
             <tr>
                 <th>　口座番号 </th>
+
                 <td>{{ form.user_account_number }}</td>
             </tr>
             <tr>
@@ -31,6 +32,22 @@
                   でないと正しくお金を受け取ることができません。<br>
                   例:スマッシュ　タロウ<br>
                   詳しくはお使いの銀行のサイトでご確認ください。
+                  <button class="btn btn-info"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#example-1"
+                  aria-expand="false"
+                  aria-controls="example-1">参考</button>
+                  <div class="collapse" id="example-1">
+                    <div class="card card-body">
+                      <p><a href="https://www.mizuhobank.co.jp/retail/products/direct/goriyo/furikomi/uketorininmei.html">みずほ銀行</a><p>
+                      <p><a href="https://faq01.bk.mufg.jp/faq/show/823?site_domain=default">三菱UFJ銀行</a></p>
+                      <p><a href="https://www.smbc.co.jp/direct/help_furikomi/14.html">三井住友銀行</a></p>
+                      <p><a href="https://help.japannetbank.co.jp/hc/ja/articles/900002596043-%E6%8C%AF%E3%82%8A%E8%BE%BC%E3%81%BF%E3%82%92%E3%81%99%E3%82%8B%E6%99%82%E3%81%AE-%E5%8F%97%E5%8F%96%E4%BA%BA%E5%8F%A3%E5%BA%A7%E5%90%8D%E7%BE%A9%E3%81%AE%E5%85%A5%E5%8A%9B%E6%96%B9%E6%B3%95%E3%82%92%E6%95%99%E3%81%88%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84-">
+                        ジャパンネット銀行
+                      </a></p>
+                    </div>
+                  </div>
                   </small>
                 </th>
                 <td>{{ form.user_holder_name }}</td>
