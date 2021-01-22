@@ -265,7 +265,7 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
-                select_course_menter ='コースが購入されました。入金は一週間程でされます。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course1)
+                select_course_menter ='コースが購入されました。入金は一週間~二週間程でされます。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course1)
                 select_course_user ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course1)
 
             elif flag == 2:
@@ -279,7 +279,7 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
-                select_course_menter ='コースが購入されました。入金は一週間程でされます。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course2)
+                select_course_menter ='コースが購入されました。入金は一週間~二週間程でされます。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course2)
                 select_course_user ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course2)
 
             elif flag == 3:
@@ -293,7 +293,7 @@ class Buy(generic.DetailView):
                         'destination': menter.user_account_id,
                     }
                 )
-                select_course_menter ='コースが購入されました。入金は一週間程でされます。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course3)
+                select_course_menter ='コースが購入されました。入金は一週間~二週間程でされます。引き続き対応よろしくお願いします。また、依頼受け付けが「拒否」に変更されました。依頼受け付けを再開する場合はユーザー情報更新ページより変更をしてください。購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course3)
                 select_course_user ='購入者:{}さん、選んだコース:{}円のコース'.format(self.request.user.last_name, menter.course3)
 
         except stripe.error.CardError as e:
@@ -309,7 +309,7 @@ class Buy(generic.DetailView):
             menter.busy = True
             menter.save()
 
-            self.request.user.email_user('購入が完了しました。', select_course_user, settings.EMAIL_HOST_USER)
+            self.request.user.email_user('ご購入ありがとうございます。購入が完了しました。', select_course_user, settings.EMAIL_HOST_USER)
             """ページに「購入完了」を載せる"""
             response = resolve_url('match:message_list', menter_pk)
             parameters = urlencode(dict(param_a='購入完了'))
