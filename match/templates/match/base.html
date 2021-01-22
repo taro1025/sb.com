@@ -40,9 +40,9 @@
         <!-- Bootstrap CSS -->
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
         <!--style.css-->
         <link rel="stylesheet" href="{% static 'match/style.css' %}">
-
 
 
     </head>
@@ -73,7 +73,7 @@
 
             <a class="nav-item nav-link" href="{% url 'match:logout' %}">ログアウト</a>
 
-            <a class="nav-item nav-link" href="{% url 'match:room' %}">メッセージbox</a>
+            <a class="nav-item nav-link" href="{% url 'match:room' %}">やりとりしてる人たち{% if user.notice == True %}<span class="notice">new!</span>{% endif %}</a>
 
         {% else %}
 
@@ -93,7 +93,7 @@
 
     </header>
     <body>
-
+      <link rel="stylesheet" href="{% static 'match/body.css' %}">
         {% block content %}{% endblock %}
 
 

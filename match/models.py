@@ -20,6 +20,7 @@ class Message(models.Model):
     room = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, verbose_name='メッセージの持ち主',blank=True, null=True,related_name='room')
     to_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, verbose_name='メッセージの宛先',blank=True, null=True,related_name='to_user')
     created_at = models.DateTimeField('送信日時間', default=timezone.now, blank=True)
+    read = models.BooleanField('既読', default=False)
 
 
 
@@ -73,7 +74,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (2, 'メンティー'),
     )
 
-
+    notice = models.BooleanField('やりとりしている人たち', default="False")
 
     my_profile = models.TextField('自己紹介',blank=True, null=True)
     user_img = models.ImageField('プロフ画像',  blank=True)

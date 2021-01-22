@@ -323,7 +323,12 @@ class Room(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        """distinctでフィールドを指定できないので代わりの処理"""
+        """「やりとりしてる人たち」の通知解除"""
+        self.request.user.notice = False
+        self.request.user.save()
+
+
+        """distinctでフィールドを指定できないので代わりの処理(やりとり相手のオブジェクトを取り出してる)"""
         pks = Message.objects.filter(
             to_user__pk=self.request.user.pk
             ).order_by('room').distinct()
@@ -342,8 +347,30 @@ class Room(generic.ListView):
         context['users'] = users
 
 
+        context['new'] = self.notice(users)
 
         return context
+
+
+
+    def notice(self, users):
+        """最新の、相手のメッセージを返す。"""
+        new = []
+
+        for user in users:
+            message = Message.objects.filter(
+                room=user,
+                to_user=self.request.user
+                ).latest('created_at')
+
+            if message.read == False:
+                new.append(message)
+
+        return new
+
+
+
+
 
 class MessageList(generic.ListView, ModelFormMixin):
     model = Message
@@ -361,7 +388,14 @@ class MessageList(generic.ListView, ModelFormMixin):
 
     def get(self, request, *args, **kwargs):
         self.object = None
-        print(request.user.busy)
+        latest = Message.objects.filter(
+                room__pk=self.kwargs['pk'],
+                to_user=self.request.user
+                ).latest('created_at')
+        if latest.read == False:
+            latest.read = True
+            latest.save()
+
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -369,20 +403,26 @@ class MessageList(generic.ListView, ModelFormMixin):
         """"メッセージの処理"""
         self.object = None
         self.object_list = self.get_queryset()
+
         form = self.get_form()
         if form.is_valid():
+
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
 
     def form_valid(self, form):
         to_user_pk = self.kwargs['pk']
-
+        to_user = get_object_or_404(User, pk=to_user_pk)
         message = form.save(commit=False)
         message.room = self.request.user
-        message.to_user = get_object_or_404(User, pk=to_user_pk)
+        message.to_user = to_user
         message.created_at = timezone.now()
         message.save()
+
+        """相手へ通知"""
+        to_user.notice = True
+        to_user.save()
         return redirect('match:message_list', pk=to_user_pk)
 
 class Login(LoginView):

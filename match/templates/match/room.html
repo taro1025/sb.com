@@ -19,9 +19,12 @@
   <div class="media">
   <img class="mr-3" src="{{ men.user_img }}" alt="no img">
   <div class="media-body">
-    <h5 class="mt-0"><a href="{% url 'match:message_list' men.pk %}">{{ men.last_name }}さん</a></h5>
+    <h5 class="mt-0"><a href="{% url 'match:message_list' men.pk %}">
+
+      {{ men.last_name }}さん
+    </a></h5>
     {{ men.my_profile}}
-  </div>
+  </div>{% if new %}{% for n in new %}{% if n.room == men and n.read == False %}<span class="notice">new!</span>{% endif %}{% endfor %}{% endif %}
  </div>
 </div>
 
