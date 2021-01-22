@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from .models import Message, Char
 from django.utils import timezone
 from django.core.exceptions import ValidationError
- 
+
 User = get_user_model()
 #ModelMultipleChoiceField
 
@@ -113,6 +113,25 @@ class UserCreateForm(UserCreationForm):
 
 class UserUpdateForm(forms.ModelForm):
 
+    template = """(大まかな構成)
+    ・値段
+    ・コースの内容(教え方は自由です。)
+    ・コースを終える基準(トラブルを避けるため、なるべく定量的な基準を設けてください。)
+    ・コース履行中の連絡手段(Line, Discord, Twitter等)"""
+
+
+    describe1 = forms.CharField(widget=forms.Textarea(attrs={
+        'placeholder': template
+    }))
+    describe2 = forms.CharField(widget=forms.Textarea(attrs={
+        'placeholder': template
+    }))
+    describe3 = forms.CharField(widget=forms.Textarea(attrs={
+        'placeholder': template
+    }))
+
+
+
     class Meta:
         model = User
         fields = ('last_name','first_name','my_profile','user_char','user_img','menter','course1','course2','course3','describe1','describe2','describe3','busy')
@@ -121,6 +140,7 @@ class UserUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
 
     def clean(self):
         cd = self.cleaned_data

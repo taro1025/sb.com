@@ -627,11 +627,11 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
 
     def get_success_url(self):
         user = get_object_or_404(User, pk=self.kwargs['pk'])
-        print(user.user_account_id)
         if user.user_account_id:
             return resolve_url('match:user_detail', self.kwargs['pk'])
         else:
             return resolve_url('match:account_update', self.kwargs['pk'])
+
 
 
 def google(request):

@@ -84,8 +84,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     course1 = models.IntegerField('コース1', blank=True, null=True)
     course2 = models.IntegerField('コース2', blank=True, null=True)
     course3 = models.IntegerField('コース3', blank=True, null=True)
-
-    describe_text="""(以下はテンプレートです。)
+    """
+    describe_text=(以下はテンプレートです。)
     ・値段
 
     ・コースの内容
@@ -97,12 +97,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     ・コースを終える基準（〜日まで、○回戦するまで、○本のリプレイを送ってもらうまで、等。
     明確な終了条件を設けるようにお願いします。)
 
-    ・コース履行中の連絡手段(Line, Discord, Twitter等)"""
+    ・コース履行中の連絡手段(Line, Discord, Twitter等)
 
     describe1 = models.TextField('コース1の説明' ,blank=True, default=describe_text)
     describe2 = models.TextField('コース2の説明', blank=True, default=describe_text)
     describe3 = models.TextField('コース3の説明', blank=True, default=describe_text)
-
+    """
+    describe1 = models.TextField('コース1の説明' ,blank=True, null=True)
+    describe2 = models.TextField('コース2の説明', blank=True, null=True)
+    describe3 = models.TextField('コース3の説明', blank=True, null=True)
     busy = models.BooleanField('忙しい', default=True)
     #決済に使う情報
     user_account_id = models.CharField('決済に使うID', max_length=255, blank=True, null=True)
