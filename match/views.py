@@ -388,13 +388,17 @@ class MessageList(generic.ListView, ModelFormMixin):
 
     def get(self, request, *args, **kwargs):
         self.object = None
-        latest = Message.objects.filter(
-                room__pk=self.kwargs['pk'],
-                to_user=self.request.user
-                ).latest('created_at')
-        if latest.read == False:
-            latest.read = True
-            latest.save()
+        try:
+            latest = Message.objects.filter(
+                    room__pk=self.kwargs['pk'],
+                    to_user=self.request.user
+                    ).latest('created_at')
+        except:
+            pass
+        if latest:  
+            if latest.read == False:
+                latest.read = True
+                latest.save()
 
         return super().get(request, *args, **kwargs)
 
