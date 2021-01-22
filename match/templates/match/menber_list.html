@@ -52,11 +52,12 @@
   {% if men.menter == 1 %}
 
 <div class="row">
+
   <div class="media">
   <img class="mr-3" src="{{ men.user_img }}" alt="no img">
   <div class="media-body">
     <h5 class="mt-0"><a href="{% url 'match:menber_detail' men.pk %}">{{ men.last_name }}さん</a></h5>
-    {{ men.my_profile}}
+    <p>{{ men.my_profile | truncatechars:80}}</p>
   </div>
  </div>
 </div>
