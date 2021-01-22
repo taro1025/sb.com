@@ -394,7 +394,7 @@ class MessageList(generic.ListView, ModelFormMixin):
                     to_user=self.request.user
                     ).latest('created_at')
         except:
-            pass
+            latest = null
         if latest:  
             if latest.read == False:
                 latest.read = True
