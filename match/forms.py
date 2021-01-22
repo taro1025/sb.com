@@ -113,11 +113,11 @@ class UserCreateForm(UserCreationForm):
 
 class UserUpdateForm(forms.ModelForm):
 
-    template = """(大まかな構成)
-    ・値段
-    ・コースの内容(教え方は自由です。)
-    ・コースを終える基準(トラブルを避けるため、なるべく定量的な基準を設けてください。)
-    ・コース履行中の連絡手段(Line, Discord, Twitter等)"""
+    template = """(大まかな構成)&#13;&#10;
+    ・値段&#13;&#10;
+    ・コースの内容(教え方は自由です。)&#13;&#10;
+    ・コースを終える基準(トラブルを避けるため、なるべく定量的な基準を設けてください。)&#13;&#10;
+    ・コース履行中の連絡手段(Line, Discord, Twitter等)&#13;&#10;"""
 
 
     describe1 = forms.CharField(widget=forms.Textarea(attrs={
