@@ -116,13 +116,13 @@ class UserUpdateForm(forms.ModelForm):
     template = """コースの内容, コースを終える基準, コース履行中の連絡手段など"""
 
 
-    describe1 = forms.CharField(widget=forms.Textarea(attrs={
+    describe1 = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'placeholder': template
     }))
-    describe2 = forms.CharField(widget=forms.Textarea(attrs={
+    describe2 = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'placeholder': template
     }))
-    describe3 = forms.CharField(widget=forms.Textarea(attrs={
+    describe3 = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'placeholder': template
     }))
 
