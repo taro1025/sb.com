@@ -189,10 +189,11 @@ try:
 except ImportError:
     pass
 
+"""
 if not DEBUG:
     import django_heroku
     django_heroku.settings(locals())
-
+"""
 
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
