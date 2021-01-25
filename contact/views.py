@@ -25,3 +25,9 @@ class Top(generic.FormView):
 
 class Thanks(generic.TemplateView):
     template_name = 'contact/thanks.html'
+
+class QandA(generic.TemplateView):
+    template_name = 'contact/q&a.html'
+
+class Terms(generic.TemplateView):
+    template_name = 'contact/terms.html'

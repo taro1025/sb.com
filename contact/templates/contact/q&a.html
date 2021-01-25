@@ -1,0 +1,112 @@
+{% extends 'match/base.html' %}
+
+
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script>
+    $(function() {
+      $('#example-main').scrollspy({offset:$(window).height() / 2});
+    });
+    </script>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'match:top' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">よくある質問と回答</li>
+  </ol>
+</nav>
+
+
+<div class="container">
+  <div class="row">
+
+<h1>よくある質問と回答</h1>
+
+<ul>
+  <li><a href="#section-1">メンターに最低限必要な実力について</a></li>
+  <li><a href="#section-2">高校生でも利用できますか?</a></li>
+  <li><a href="#section-3">中学生でも利用できますか？</a></li>
+  <li><a href="#section-4">メンターにコースを申し込むことができないです</a></li>
+  <li><a href="#section-5">詳細設定はメンティーもしないといけないですか？</a></li>
+  <li><a href="#section-6">詳細設定で入力するデータはどう管理していますか?またセキュリティは十分ですか?</a></li>
+
+</ul>
+
+</div>
+
+
+
+<div id="example-main">
+  <div class="shadow-sm p-3 mb-3">
+  <h3 id="section-1">メンターの最低限必要な実力について</h3><br>
+  <p>明確な基準はございません。<br>強いて言うなら、中級者レベルからメンターとして活躍できると考えております。例えばゲームの上手さを10段階で表したとして中級者(5段目)のメンターがいたとしたら1~4段目にいる
+    メンティーに何かしら教えられることがある、と考えております。
+    </p>
+  </div>
+
+  <br>
+
+  <div class="shadow-sm p-3 mb-3">
+  <h3 id="section-2">高校生でも利用できますか?</h3><br>
+  <p>高校生でもデビットカードがあれば利用できます。また、メンターとして利用する場合は以下いずれかの身分証明書が必要です。
+
+  </p>
+  <ul>
+    <li>運転免許証</li>
+    <li>パスポート</li>
+    <li>顔つきマイナンバー</li>
+    <li>住基カード(顔つき)</li>
+  </ul>
+  </div>
+
+  <br>
+
+  <div class="shadow-sm p-3 mb-3">
+  <h3 id="section-3">中学生でも利用できますか?</h3><br>
+  <p>親権者その他の法定代理人の同意を得た場合できます。詳しくは<a href="{% url 'contact:terms' %}">利用規約</a>をお読みください。</p>
+
+  </div>
+
+  <br>
+
+  <div class="shadow-sm p-3 mb-3">
+  <h3 id="section-4">メンターにコースを申し込むことができないです。</h3><br>
+  <p>以下のいずれかの可能性があります。
+    <ol>
+      <li>あなたのステータスがメンターになっている</li>
+      ユーザー情報更新画面からステータスをメンティーに変更してください。
+      <li>メンターが依頼を受け付けていない</li>
+      メンターに、ユーザー情報更新画面より「依頼を受け付けない」のチェックを外すよう指示してください。
+      <li>メンターが詳細設定をしていない</li>
+      メンターに、ユーザー情報画面>詳細設定より詳細設定をするよう指示してください。
+      <li>メンターがコースの料金を設定していない</li>
+      メンターに、コース料金を設定するよう指示してください。
+    </ol>
+
+
+  </div>
+
+  <br>
+
+  <div class="shadow-sm p-3 mb-3">
+  <h3 id="section-5">詳細設定はメンティーもしないといけないですか？</h3><br>
+  <p>メンティーの方は詳細設定は必要ございません。</p>
+  </div>
+
+    <br>
+
+    <div class="shadow-sm p-3 mb-3">
+    <h3 id="section-6">詳細設定で入力するデータはどう管理していますか?またセキュリティは十分ですか?</h3><br>
+    <p>詳細設定で入力していただくデータはスマッシュマッチのデータベースではなく、決済代行会社であるStripeで保管されます。セキュリティに関しては<a href="https://stripe.com/jp/privacy#security-and-retention-ja">こちら</a>をご覧ください。
+
+    </div>
+
+    <br>
+
+
+</div>
+</div>
+
+{% endblock %}
